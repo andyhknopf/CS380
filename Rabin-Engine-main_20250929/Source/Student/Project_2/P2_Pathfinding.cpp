@@ -240,7 +240,7 @@ PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, Pat
       return PathResult::COMPLETE;
     }
 
-    // For all neighboring child nodes of parent node
+    // For all neighboring child nodes of parent node 
     SearchNeighbors(parentNode, request);
 
     // Place parent node on closed list
@@ -250,8 +250,7 @@ PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, Pat
       terrain->set_color(parentNode->gridPos, Colors::Yellow);
 
     // If taking too long or in one-step-per-frame mode
-    ++loopCount;
-    if (loopCount >= MAX_LOOPS || request.settings.singleStep)
+    if (request.settings.singleStep)
       return PathResult::PROCESSING;
   }
 
