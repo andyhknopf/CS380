@@ -1,0 +1,8 @@
+TREENAME(RunningMan)
+TREENODE(C_Sequencer, 0)
+TREENODE(D_RepeatUntilSuccess, 1)
+TREENODE(D_AtMapCorner, 2)
+TREENODE(L_March, 3)
+TREENODE(D_RepeatUntilSuccess, 1)
+TREENODE(L_TurnLeft, 2)
+TREENODE(L_PlayCommandMarchSound, 1)

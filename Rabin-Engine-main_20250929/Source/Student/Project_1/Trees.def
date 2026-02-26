@@ -1,0 +1,7 @@
+#include "../Source/Student/Project_1/Trees/Bird.bht"
+#include "../Source/Student/Project_1/Trees/Example.bht"
+#include "../Source/Student/Project_1/Trees/Human.bht"
+#include "../Source/Student/Project_1/Trees/Idle.bht"
+#include "../Source/Student/Project_1/Trees/RunningMan.bht"
+#include "../Source/Student/Project_1/Trees/Sarge.bht"
+#include "../Source/Student/Project_1/Trees/Soldier.bht"
