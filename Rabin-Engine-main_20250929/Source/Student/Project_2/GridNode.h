@@ -21,6 +21,7 @@ class GridNode
     void ClearData(void);
 
     // Members
+    GridNode* neighbors[8];
     GridNode* parent;
     GridPos gridPos;
     float finalCost;
