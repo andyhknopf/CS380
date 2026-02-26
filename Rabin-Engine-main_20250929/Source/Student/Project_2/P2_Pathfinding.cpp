@@ -64,15 +64,15 @@ void AStarPather::shutdown()
     */
 }
 
-float AStarPather::CalculateHeuristic(GridNode* node, PathRequest * request)
+float AStarPather::CalculateHeuristic(GridNode* node, PathRequest & request)
 {
   float cost = -999.99f;
   GridPos startNode = node->gridPos; // terrain->get_grid_position(request.start);
-  GridPos goalNode = terrain->get_grid_position(request->goal);
+  GridPos goalNode = terrain->get_grid_position(request.goal);
   float xDiff = goal.col - start.col;
   float yDiff = goal.row - start.row;
 
-  switch (request->settings.heuristic)
+  switch (request.settings.heuristic)
   {
     case Heuristic::OCTILE:
     {
@@ -80,7 +80,7 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest * request)
       // min(9, 3) * 1.41 + max(9, 3) – min(9, 3)
       float minimum = std::min(xDiff, yDiff);
       float maximum = std::max(xDiff, yDiff);
-      cost = (minimum * ROOT2) + (maximum - minimum);
+      cost = minimum * ROOT2 + maximum - minimum;
       break;
     }
     case Heuristic::CHEBYSHEV:
@@ -91,7 +91,7 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest * request)
     case Heuristic::INCONSISTENT:
     {
       if ((node->gridPos.row + node->gridPos.col) % 2 > 0)
-        cost = GridPos::Distance(&start, &goal);
+        cost = GridPos::Distance(start, goal);
       else
         return 0.0f;
 
@@ -106,17 +106,17 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest * request)
     }
     case Heuristic::EUCLIDEAN:
     {
-      cost = GridPos::Distance(&start, &goal);
+      cost = GridPos::Distance(start, goal);
       break;
     }
     default : // Just default to euclidean distance
     {
-      cost = GridPos::Distance(&start,&goal);
+      cost = GridPos::Distance(start,goal);
       break;
     }
   }
 
-  return cost * request->settings.weight;
+  return cost * request.settings.weight;
 }
 
 PathResult AStarPather::compute_path(PathRequest &request)
@@ -174,7 +174,7 @@ PathResult AStarPather::compute_path(PathRequest &request)
   // If we got a new path request
   if (request.newRequest)
   {
-    ClearNodes();
+    ClearNodes(false);
 
     start = terrain->get_grid_position(request.start);
     goal = terrain->get_grid_position(request.goal);
@@ -190,7 +190,7 @@ PathResult AStarPather::compute_path(PathRequest &request)
     // Question: Will parentNode->givenCost always be zero?
     startNode = &gridMap[start.row][start.col];
 
-    heuristic = CalculateHeuristic(startNode, &request);
+    heuristic = CalculateHeuristic(startNode, request);
     startNode->givenCost = 0.0f;
     startNode->finalCost = startNode->givenCost + heuristic;
     Push(startNode);
@@ -226,7 +226,7 @@ PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, Pat
     if (parentNode->onList == GridNode::UNVISITED)
     {
       if (parentNode->parent)
-        parentNode->givenCost = parentNode->parent->givenCost + GridPos::Distance(&parentNode->parent->gridPos, &parentNode->gridPos);
+        parentNode->givenCost = parentNode->parent->givenCost + GridPos::Distance(parentNode->parent->gridPos, parentNode->gridPos);
       else
         parentNode->givenCost = 0;
     }
@@ -283,14 +283,14 @@ void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
     // assert(childNode->givenCost < MAX_MAP_SIZE * MAX_MAP_SIZE);
 
     // Calculate the cost of the child node
-    float childGiven = parentNode->givenCost + GridPos::Distance(&parentNode->gridPos, &childNode->gridPos);
+    float childGiven = parentNode->givenCost + GridPos::Distance(parentNode->gridPos, childNode->gridPos);
 
     // Put it on the open list (Push() on open list)
     // If child hasn't been visited yet (isn't on open and isn't on closed list)
     if (childNode->onList == GridNode::UNVISITED)
     {
       // If adding to open list: compute cost f(x) = g(x) + h(x), set new parent pointer!)
-      float heuristic = CalculateHeuristic(childNode, &request);
+      float heuristic = CalculateHeuristic(childNode, request);
       childNode->givenCost = childGiven;
       childNode->finalCost = childGiven + heuristic;
       childNode->parent = parentNode;
@@ -333,12 +333,7 @@ void AStarPather::PushFinalPath(GridNode*& node, PathRequest& request)
 void AStarPather::OnMapChange()
 {
   // WARNING! This might be happening twice, potential slowdown
-  ClearNodes();
-
-  //for (int i = 0; i < MAX_MAP_SIZE; ++i)
-  //  for (int j = 0; j < MAX_MAP_SIZE; ++j)
-  //    for (int k = 0; k < 8; ++k)
-  //      neighBors[i][j][k] = nullptr;
+  ClearNodes(true);
 
   // Precompute neighbors
   PrecomputeNeighbors();
@@ -445,11 +440,11 @@ void AStarPather::AddNeighbor(GridPos &node, GridPos &neighbor)
 }
 
 
-void AStarPather::ClearNodes(void)
+void AStarPather::ClearNodes(bool mapChange)
 {
-
   ClearOpenList();
   startNode = nullptr;
+  back = -1;
 
   for (int i = 0; i < MAX_MAP_SIZE; ++i)
   {
@@ -457,10 +452,15 @@ void AStarPather::ClearNodes(void)
     {
       openList[i + (MAX_MAP_SIZE * j)] = nullptr;
       gridMap[i][j].ClearData();
+
+      if (!mapChange)
+        continue;
+
+      // preallocate neighbors
+      for (int k = 0; k < 8; ++k)
+        neighBors[i][j][k] = nullptr;
     }
   }
-
-  back = -1;
 }
 
 void AStarPather::ClearOpenList()

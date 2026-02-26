@@ -16,7 +16,7 @@ public:
     // DO NOT MODIFY THESE SIGNATURES
     bool initialize();
     void shutdown();
-    float CalculateHeuristic(GridNode* node, PathRequest * request);
+    float CalculateHeuristic(GridNode* node, PathRequest & request);
     PathResult compute_path(PathRequest &request);
     PathResult SearchOpenList(GridNode*& parentNode, GridPos& goal, PathRequest& request, int& loopCount, bool& retFlag);
     void SearchNeighbors(GridNode* node, PathRequest &);
@@ -35,7 +35,7 @@ public:
     */
 
     // Methods
-    void ClearNodes(void);
+    void ClearNodes(bool);
     void ClearOpenList();
     void Push(GridNode *);
     void Add(GridNode*);
