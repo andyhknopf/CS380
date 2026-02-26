@@ -240,7 +240,7 @@ PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, Pat
       return PathResult::COMPLETE;
     }
 
-    // For all neighboring child nodes of parent node
+    // For all neighboring child nodes of parent node 
     SearchNeighbors(parentNode, request);
 
     // Place parent node on closed list
@@ -250,8 +250,7 @@ PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, Pat
       terrain->set_color(parentNode->gridPos, Colors::Yellow);
 
     // If taking too long or in one-step-per-frame mode
-    ++loopCount;
-    if (loopCount >= MAX_LOOPS || request.settings.singleStep)
+    if (request.settings.singleStep)
       return PathResult::PROCESSING;
   }
 
@@ -269,18 +268,12 @@ void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
   // For each neighbor
   for (int i = 0; i < 8; ++i)
   {
-    // Skip if this neighbor is null
-    if (neighBors[parentNode->gridPos.row][parentNode->gridPos.col][i] == nullptr)
-      continue;
-
-
     // Check a neighbor
-    childNode = neighBors[parentNode->gridPos.row][parentNode->gridPos.col][i];
-    assert(childNode->gridPos.row < MAX_MAP_SIZE * MAX_MAP_SIZE || childNode->gridPos.col < MAX_MAP_SIZE * MAX_MAP_SIZE);
-      
+    childNode = parentNode->neighbors[i];
+    if (childNode == nullptr)
+      continue;
     
     // TESTING: Delete this later 
-    // assert(childNode->givenCost < MAX_MAP_SIZE * MAX_MAP_SIZE);
 
     // Calculate the cost of the child node
     float childGiven = parentNode->givenCost + GridPos::Distance(parentNode->gridPos, childNode->gridPos);
@@ -290,7 +283,7 @@ void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
     if (childNode->onList == GridNode::UNVISITED)
     {
       // If adding to open list: compute cost f(x) = g(x) + h(x), set new parent pointer!)
-      float heuristic = CalculateHeuristic(childNode, request);
+      float heuristic = childNode->finalCost - childNode->givenCost;// CalculateHeuristic(childNode, request);
       childNode->givenCost = childGiven;
       childNode->finalCost = childGiven + heuristic;
       childNode->parent = parentNode;
@@ -430,10 +423,10 @@ void AStarPather::AddNeighbor(GridPos &node, GridPos &neighbor)
   for (int i = 0; i < 8; ++i)
   {
     // Skip if this neighbor slot has been initialized already
-    if (neighBors[node.row][node.col][i] == nullptr)
+    if (gridMap[node.row][node.col].neighbors[i] == nullptr)
     {
       // Add this neighbor to the list of neighbors
-      neighBors[node.row][node.col][i] = &gridMap[neighbor.row][neighbor.col];
+      gridMap[node.row][node.col].neighbors[i] = &gridMap[neighbor.row][neighbor.col];
       return;
     }
   }
@@ -458,7 +451,7 @@ void AStarPather::ClearNodes(bool mapChange)
 
       // preallocate neighbors
       for (int k = 0; k < 8; ++k)
-        neighBors[i][j][k] = nullptr;
+        gridMap[i][j].neighbors[k] = nullptr;
     }
   }
 }

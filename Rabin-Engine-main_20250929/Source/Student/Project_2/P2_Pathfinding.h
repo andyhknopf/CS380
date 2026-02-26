@@ -47,7 +47,7 @@ public:
     // Variables
     static inline const int MAX_MAP_SIZE = 40;
     static inline GridNode gridMap[MAX_MAP_SIZE][MAX_MAP_SIZE];
-    static inline GridNode* neighBors[MAX_MAP_SIZE][MAX_MAP_SIZE][8] = { nullptr }; // Precomputed ftw, 
+    // static inline GridNode* neighBors[MAX_MAP_SIZE][MAX_MAP_SIZE][8] = { nullptr }; // Precomputed ftw, 
     // never in my life did I think I would have a 3D array of pointers of my own volition
     GridNode *openList[MAX_MAP_SIZE * MAX_MAP_SIZE];
     bool openListEmpty;
