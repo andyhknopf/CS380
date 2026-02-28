@@ -18,9 +18,12 @@ public:
     void shutdown();
     float CalculateHeuristic(GridNode* node, PathRequest & request);
     PathResult compute_path(PathRequest &request);
-    PathResult SearchOpenList(GridNode*& parentNode, GridPos& goal, PathRequest& request, int& loopCount, bool& retFlag);
+    PathResult SearchOpenList(GridNode*& parentNode, GridPos& goal, PathRequest& reques);
     void SearchNeighbors(GridNode* node, PathRequest &);
+    void InitializeChildNode(GridNode* childNode, float childGiven, GridNode* parentNode);
     void PushFinalPath(GridNode*& node, PathRequest& request);
+    bool RubberbandNodes(GridNode * node, GridNode* parent, bool rubberbandingEnabled);
+    bool PathHasIntersection(GridNode* node, GridNode* grandparent);
     void OnMapChange();
     void PrecomputeNeighbors();
     bool FindEligibleNeighbors(GridPos& offset, GridPos& nodePos);
@@ -33,12 +36,10 @@ public:
         It doesn't all need to be in this header and cpp, structure it whatever way
         makes sense to you.
     */
-
-    // Methods
+    
     void ClearNodes(bool);
     void ClearOpenList();
     void Push(GridNode *);
-    void Add(GridNode*);
     GridNode* Pop(void);
     GridNode * Pop_DEPRECATED();
     void Update(GridNode *, GridNode *, float);

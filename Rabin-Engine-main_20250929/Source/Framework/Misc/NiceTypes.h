@@ -92,9 +92,9 @@ struct GridPos
       return row != rhs.row || col != rhs.col;
   }
 
-  static float Distance(GridPos &a, GridPos &b)
+  static float Distance(GridPos *a, GridPos *b)
   {
-    if (a.row == b.row || a.col == b.col)
+    if (a->row == b->row || a->col == b->col)
       return 1.0f;
     else
       return ROOT2;

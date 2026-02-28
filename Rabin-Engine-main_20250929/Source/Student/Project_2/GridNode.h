@@ -5,7 +5,7 @@ class GridNode
   
   // TODO: Make structure as small as possible
   public:
-    enum ListStatus : int
+    enum ListStatus : char
     { 
       UNVISITED = -1,
       CLOSED = 0,

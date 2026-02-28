@@ -27,8 +27,8 @@ bool AStarPather::initialize()
     for (int col = 0; col < MAX_MAP_SIZE; col++)
     {
       gridMap[row][col].gridPos = GridPos(row, col);
-      assert(gridMap[row][col].gridPos.row < MAX_MAP_SIZE * MAX_MAP_SIZE || 
-             gridMap[row][col].gridPos.col < MAX_MAP_SIZE * MAX_MAP_SIZE);
+      //assert(gridMap[row][col].gridPos.row < MAX_MAP_SIZE * MAX_MAP_SIZE || 
+             //gridMap[row][col].gridPos.col < MAX_MAP_SIZE * MAX_MAP_SIZE);
 
     }
   }
@@ -91,7 +91,7 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest & request)
     case Heuristic::INCONSISTENT:
     {
       if ((node->gridPos.row + node->gridPos.col) % 2 > 0)
-        cost = GridPos::Distance(start, goal);
+        cost = GridPos::Distance(&start, &goal);
       else
         return 0.0f;
 
@@ -106,12 +106,12 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest & request)
     }
     case Heuristic::EUCLIDEAN:
     {
-      cost = GridPos::Distance(start, goal);
+      cost = GridPos::Distance(&start, &goal);
       break;
     }
     default : // Just default to euclidean distance
     {
-      cost = GridPos::Distance(start,goal);
+      cost = GridPos::Distance(&start,&goal);
       break;
     }
   }
@@ -153,17 +153,8 @@ PathResult AStarPather::compute_path(PathRequest &request)
           IMPOSSIBLE - a path from start to goal does not exist, do not add start position to path
   */
 
-
   // Should be 
   int loopCount = 0;
-
-  for (int row = 0; row < MAX_MAP_SIZE; ++row)
-  {
-    for (int col = 0; col < MAX_MAP_SIZE; ++col)
-    {
-      assert(gridMap[row][col].gridPos.row < MAX_MAP_SIZE * MAX_MAP_SIZE || gridMap[row][col].gridPos.col < MAX_MAP_SIZE * MAX_MAP_SIZE);
-    }
-  }
 
   // WRITE YOUR CODE HERE
   // First parent is the start always
@@ -174,6 +165,7 @@ PathResult AStarPather::compute_path(PathRequest &request)
   // If we got a new path request
   if (request.newRequest)
   {
+
     ClearNodes(false);
 
     start = terrain->get_grid_position(request.start);
@@ -198,37 +190,25 @@ PathResult AStarPather::compute_path(PathRequest &request)
 
   // While the open list isn't empty
   // Note: First time using 'Extract Function' feature in Visual Studio, wouldn't have though to do this
-  bool retFlag;
-  PathResult retVal = SearchOpenList(startNode, goal, request, loopCount, retFlag);
-  if (retFlag) return retVal;
-
-  // Open list empty, thus no path possible (return PathResult::IMPOSSIBLE)
-  return PathResult::IMPOSSIBLE;
+  return SearchOpenList(startNode, goal, request);
 }
 
-PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, PathRequest& request, int& loopCount, bool& retFlag)
+PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, PathRequest& request)
 {
   // Will we return the result of this function?
-  retFlag = true;
-
   
   for (int i = 0; !openListEmpty; ++i)
   {
     // parent node = Pop cheapest node off of open list
     parentNode = Pop();
     if (!parentNode)
-    {
-      retFlag = true;
       return PathResult::IMPOSSIBLE;
-    }
 
     // Check if parent node is uninitialized
     if (parentNode->onList == GridNode::UNVISITED)
     {
       if (parentNode->parent)
-        parentNode->givenCost = parentNode->parent->givenCost + GridPos::Distance(parentNode->parent->gridPos, parentNode->gridPos);
-      else
-        parentNode->givenCost = 0;
+        parentNode->givenCost = parentNode->parent->givenCost + GridPos::Distance(&parentNode->parent->gridPos, &parentNode->gridPos);
     }
 
     // If parent node is goal node, path is found
@@ -255,15 +235,13 @@ PathResult AStarPather::SearchOpenList(GridNode*& parentNode, GridPos& goal, Pat
   }
 
   // Tell the parent function we are ignoring the return value of this child function
-  retFlag = false;
-  return {};
+  return PathResult::IMPOSSIBLE;
 }
 
 void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
 {
   GridNode* childNode = nullptr; // The child we are currently searching through
   GridNode* toPush = nullptr;    // The child node we will push onto the open list
-
 
   // For each neighbor
   for (int i = 0; i < 8; ++i)
@@ -273,20 +251,15 @@ void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
     if (childNode == nullptr)
       continue;
     
-    // TESTING: Delete this later 
-
     // Calculate the cost of the child node
-    float childGiven = parentNode->givenCost + GridPos::Distance(parentNode->gridPos, childNode->gridPos);
+    float childGiven = parentNode->givenCost + GridPos::Distance(&parentNode->gridPos, &childNode->gridPos);
 
     // Put it on the open list (Push() on open list)
     // If child hasn't been visited yet (isn't on open and isn't on closed list)
     if (childNode->onList == GridNode::UNVISITED)
     {
       // If adding to open list: compute cost f(x) = g(x) + h(x), set new parent pointer!)
-      float heuristic = childNode->finalCost - childNode->givenCost;// CalculateHeuristic(childNode, request);
-      childNode->givenCost = childGiven;
-      childNode->finalCost = childGiven + heuristic;
-      childNode->parent = parentNode;
+      InitializeChildNode(childNode, childGiven, parentNode);
       Push(childNode);
 
       // Set parent pointer
@@ -298,29 +271,92 @@ void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
     }
 
     // (Only relevant for visiting previously visited node from new direction)
+    // Take old expensive one off both lists & put new cheaper one on open list (Update())
     bool newOneIsCheaper = (childGiven < childNode->givenCost);
-    
     if (newOneIsCheaper)
-    {
-      // Take old expensive one off both lists & put new cheaper one on open list (Update())
       Update(childNode, parentNode, childGiven);
-    }
-
   }
+}
+
+void AStarPather::InitializeChildNode(GridNode* childNode, float childGiven, GridNode* parentNode)
+{
+  float heuristic = childNode->finalCost - childNode->givenCost; // CalculateHeuristic(childNode, request);
+  childNode->givenCost = childGiven;
+  childNode->finalCost = childGiven + heuristic;
+  childNode->parent = parentNode;
 }
 
 void AStarPather::PushFinalPath(GridNode*& node, PathRequest& request)
 {
   GridNode* path = node;
+  GridNode* parent = nullptr;
+  bool removedMiddleNode = false;
+
+  // TODO: Add 3 spline points between each waypoint
   while (path)
   {
-    Vec3 nodePos = terrain->get_world_position(path->gridPos);
-    request.path.push_back(nodePos);
+    // Set the parent pointer
+    parent = path->parent;
+
+    // Attempt middle node removal if rubberbanding is on
+    removedMiddleNode = RubberbandNodes(path, parent, request.settings.rubberBanding);
+    if (removedMiddleNode)
+      continue; // Revaluate loop again
+    
+    // Add this node to the list
+    request.path.push_back(terrain->get_world_position(path->gridPos));
+
+    // Go to the next node
     path = path->parent;
   }
 
   // Idk, easiest way to fix it? Probably very slow
   std::reverse(request.path.begin(), request.path.end());
+}
+
+bool AStarPather::RubberbandNodes(GridNode* node, GridNode* parent, bool rubberbandingEnabled)
+{
+  GridNode* grandparent = nullptr;
+ 
+  // If there's no parent
+  if (!parent || !rubberbandingEnabled)
+    return false;
+
+  // Exit if there's no grandparent node
+  grandparent = parent->parent;
+  if (!grandparent)
+    return false;
+
+  // Abort if the path has an intersection
+  if (PathHasIntersection(node, grandparent))
+    return false;
+
+  // Replace the node on the list
+  node->parent = grandparent;
+  return true;
+}
+
+// Check if walls intersect path between this node and grandparent (AABB collision checK)
+bool AStarPather::PathHasIntersection(GridNode* node, GridNode* grandparent)
+{
+  int rowMax = std::max(node->gridPos.row, grandparent->gridPos.row);
+  int colMax = std::max(node->gridPos.col, grandparent->gridPos.col);
+
+  int rowMin = std::min(node->gridPos.row, grandparent->gridPos.row);
+  int colMin = std::min(node->gridPos.col, grandparent->gridPos.col);
+
+  // Check each node inbetween the minimum node and maximum point
+  for (int i = rowMin; i <= rowMax; ++i)
+  {
+    for (int j = colMin; j <= colMax; ++j)
+    {
+      // If there is a wall in the way
+      if (terrain->is_wall(GridPos(i, j)))
+        return true;
+    }
+  }
+
+  return false;
 }
 
 void AStarPather::OnMapChange()
@@ -345,11 +381,10 @@ void AStarPather::PrecomputeNeighbors()
   {
     for (int col = 0; col < cols; col++)
     {
-      // TODO: Okay, time to figure out the diagonals
       // Check top left, middle, right
       nodePos = GridPos(row, col);
 
-      // If I am not eligible
+      // Skip if I am not eligible
       if (!IsEligibleNode(nodePos))
         continue;
 
@@ -383,8 +418,6 @@ void AStarPather::PrecomputeNeighbors()
 bool AStarPather::FindEligibleNeighbors(GridPos& offset, GridPos& nodePos)
 {
   // Skip if an invalid neighbor position
-
-
   if (!IsEligibleNode(nodePos + offset))
     return false;
 
@@ -423,33 +456,37 @@ void AStarPather::AddNeighbor(GridPos &node, GridPos &neighbor)
   for (int i = 0; i < 8; ++i)
   {
     // Skip if this neighbor slot has been initialized already
-    if (gridMap[node.row][node.col].neighbors[i] == nullptr)
-    {
-      // Add this neighbor to the list of neighbors
-      gridMap[node.row][node.col].neighbors[i] = &gridMap[neighbor.row][neighbor.col];
-      return;
-    }
+    if (gridMap[node.row][node.col].neighbors[i])
+      continue;
+
+    // Add this neighbor to the list of neighbors
+    gridMap[node.row][node.col].neighbors[i] = &gridMap[neighbor.row][neighbor.col];
+    return;
   }
 }
 
 
 void AStarPather::ClearNodes(bool mapChange)
 {
-  ClearOpenList();
+  // ClearOpenList();
   startNode = nullptr;
   back = -1;
 
-  for (int i = 0; i < MAX_MAP_SIZE; ++i)
+  int rows = terrain->get_map_height();
+  int cols = terrain->get_map_width();
+
+  for (int i = 0; i < rows; ++i)
   {
-    for (int j = 0; j < MAX_MAP_SIZE; ++j)
+    for (int j = 0; j < cols; ++j)
     {
-      openList[i + (MAX_MAP_SIZE * j)] = nullptr;
+      openList[i + (cols * j)] = nullptr;
       gridMap[i][j].ClearData();
 
+      // Skip next steps if the map hasn't changed
       if (!mapChange)
         continue;
 
-      // preallocate neighbors
+      // preallocate neighbors on map change
       for (int k = 0; k < 8; ++k)
         gridMap[i][j].neighbors[k] = nullptr;
     }
@@ -458,19 +495,16 @@ void AStarPather::ClearNodes(bool mapChange)
 
 void AStarPather::ClearOpenList()
 {
-
-  //back = -1;
+  // Don't do anything for now I guess?
+  // More optimal to do during the same loop in ClearNodes()
 }
 
 void AStarPather::Push(GridNode* node)
 {
   // CASE AGNOSTIC:
-  
   // Mark the open list as non-empty
   openListEmpty = false;
   
-
-
   // CASE: This node already allocated to array
   if (node->onList == GridNode::CLOSED || node->onList == GridNode::OPEN)
   {
@@ -480,10 +514,6 @@ void AStarPather::Push(GridNode* node)
   }
 
   // CASE: Node not already allocated to array
-
-  // If at maximum array bounds (should never ever happen)
-  assert(back < (MAX_MAP_SIZE * MAX_MAP_SIZE) - 1);
-
   // Push the node onto the stack
   ++back;
   node->onList = GridNode::OPEN;
@@ -493,28 +523,26 @@ void AStarPather::Push(GridNode* node)
 
 GridNode* AStarPather::Pop(void)
 {
-  GridNode* cheapestNode = nullptr;
-  int cheapestNodeIndex = 0;
-
+  // If the list is already empty
   if (back < 0)
   {
     openListEmpty = true;
     return nullptr;
   }
 
+  GridNode* cheapestNode = nullptr;
+  int cheapestNodeIndex = 0;
+
   // Loop through the open list and find the cheapest node
   for (int i = 0; openList[i] != nullptr; ++i)
   { 
-    // Skip if node is on the closed list
-    if (openList[i]->onList == GridNode::CLOSED)
+    // Skip if not first iteration and it's more expensive
+    if (cheapestNode && openList[i]->finalCost >= cheapestNode->finalCost)
       continue;
-
-    // Switch cheapest node if 
-    if (cheapestNode == nullptr || openList[i]->finalCost < cheapestNode->finalCost)
-    {
-      cheapestNode = openList[i];
-      cheapestNodeIndex = i;
-    }
+    
+    // Make this one the cheapest node
+    cheapestNode = openList[i];
+    cheapestNodeIndex = i;
   }
 
   // Putting onto closed list is handled elsewhere in SearchOpenList()
@@ -522,8 +550,10 @@ GridNode* AStarPather::Pop(void)
   openList[back] = nullptr;
   --back;
 
+  // Set the empty flag if we emptied the list
   if (back < 0)
     openListEmpty = true;
+
   return cheapestNode;
 }
 
