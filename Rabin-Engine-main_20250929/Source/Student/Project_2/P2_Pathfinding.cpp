@@ -292,7 +292,6 @@ void AStarPather::PushFinalPath(GridNode*& node, PathRequest& request)
   GridNode* parent = nullptr;
   bool removedMiddleNode = false;
 
-  // TODO: Add 3 spline points between each waypoint
   while (path)
   {
     // Set the parent pointer
@@ -303,15 +302,33 @@ void AStarPather::PushFinalPath(GridNode*& node, PathRequest& request)
     if (removedMiddleNode)
       continue; // Revaluate loop again
     
+
     // Add this node to the list
-    request.path.push_back(terrain->get_world_position(path->gridPos));
+    Vec3 pathPos = terrain->get_world_position(path->gridPos);
+    request.path.push_front(pathPos);
+    
+    // TODO: Add 3 spline points between each waypoint
+    //if (request.settings.smoothing)
+    //{
+    //  Vec3 splinePoint = pathPos;
+
+    //  auto p4 = path;
+    //  auto p3 = parent;
+    //  auto p2 = parent->parent;
+    //  auto p1 = parent->parent->parent;
+    //  
+    //  // TODO: If rubberbanding is on add grid points back in if gap is greater than 1.5 grid squares
+    //  if (request.settings.rubberBanding)
+    //  {
+
+    //  }
+    //}
 
     // Go to the next node
+    //--it;
     path = path->parent;
   }
 
-  // Idk, easiest way to fix it? Probably very slow
-  std::reverse(request.path.begin(), request.path.end());
 }
 
 bool AStarPather::RubberbandNodes(GridNode* node, GridNode* parent, bool rubberbandingEnabled)
