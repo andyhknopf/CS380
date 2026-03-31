@@ -200,7 +200,9 @@ void Agent::set_movement_speed(float speed)
 #pragma endregion
 
 void Agent::update(float dt)
-{}
+{
+
+}
 
 Agent::AgentModel Agent::getAgentModel()
 {
