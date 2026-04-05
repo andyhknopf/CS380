@@ -9,12 +9,18 @@ public class BasicNPC : MonoBehaviour
     public Vector2 TTM_Range;
     public Vector2 Travel_Range;
 
+    public GameObject city;
     Vector3 initialPos;
     public float Radius;
 
     void Start()
     {
-        initialPos = transform.position;
+        if (!city) initialPos = transform.position;
+        else
+        {
+            initialPos = city.transform.position;
+            Radius = city.GetComponent<CapsuleCollider>().radius;
+        }
 
         if (TTM_Range == Vector2.zero)
             TTM_Range = new Vector2(2.0f, 5.0f);
