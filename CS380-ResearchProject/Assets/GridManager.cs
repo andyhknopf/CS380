@@ -29,6 +29,7 @@ public class GridManager : MonoBehaviour
 
     [Header("Turn Settings")]
     [SerializeField] private float turnSpeed = 1f;
+    [SerializeField] private bool isTurnPaused = true;
 
     [Header("News Icon")]
     [SerializeField] private Sprite newsSprite;
@@ -60,8 +61,8 @@ public class GridManager : MonoBehaviour
 
         origin = new Vector3(
             -gridWidth / 2f + cellSize / 2f,
-            -gridHeight / 2f + cellSize / 2f,
-            0f
+            0f,
+            -gridHeight / 2f + cellSize / 2f
         );
 
         grid = new GridNode[width, height];
@@ -75,13 +76,14 @@ public class GridManager : MonoBehaviour
                     x = x,
                     y = y,
                     terrain = TerrainType.FIELD,
-                    worldPos = origin + new Vector3(x * cellSize, y * cellSize, 0f),
+                    worldPos = origin + new Vector3(x * cellSize, 0f, y * cellSize),
                     spreadCost = GetSpreadCost(TerrainType.FIELD)
                 };
 
                 // background for borders
                 GameObject bg = new GameObject($"BG_{x}_{y}");
                 bg.transform.position = node.worldPos;
+                bg.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 bg.transform.SetParent(transform);
                 bg.transform.localScale = Vector3.one * (cellSize / spriteSize.x);
                 SpriteRenderer bgSr = bg.AddComponent<SpriteRenderer>();
@@ -91,6 +93,7 @@ public class GridManager : MonoBehaviour
 
                 GameObject go = new GameObject($"Node_{x}_{y}");
                 go.transform.position = node.worldPos;
+                go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 go.transform.SetParent(transform);
                 go.transform.localScale = Vector3.one * (cellSize / spriteSize.x * 0.9f);
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
@@ -113,12 +116,15 @@ public class GridManager : MonoBehaviour
         }
         
         // TURN
-        timer += Time.deltaTime;
-        if (timer >= turnSpeed)
+        if (!isTurnPaused)
         {
-            timer = 0f;
-            currentTurn++;
-            OnTurnAdvanced();
+            timer += Time.deltaTime;
+            if (timer >= turnSpeed)
+            {
+                timer = 0f;
+                currentTurn++;
+                OnTurnAdvanced();
+            }
         }
 
         // TERRAIN(MAP) EDIT
@@ -127,10 +133,10 @@ public class GridManager : MonoBehaviour
             Vector3 screenPos = new Vector3(
                 Input.mousePosition.x,
                 Input.mousePosition.y,
-                -Camera.main.transform.position.z
+                Camera.main.transform.position.y
             );
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-            worldPos.z = 0f;
+            worldPos.y = 0f;
             Vector2Int gridPos = WorldToGrid(worldPos);
             SetTerrain(gridPos.x, gridPos.y, selectedTerrain);
             UpdateCostLabels();
@@ -142,10 +148,10 @@ public class GridManager : MonoBehaviour
             Vector3 screenPos = new Vector3(
                 Input.mousePosition.x,
                 Input.mousePosition.y,
-                -Camera.main.transform.position.z
+                Camera.main.transform.position.y
             );
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-            worldPos.z = 0f;
+            worldPos.y = 0f;
             Vector2Int gridPos = WorldToGrid(worldPos);
             TryPlantNews(gridPos.x, gridPos.y);
         }
@@ -197,24 +203,27 @@ public class GridManager : MonoBehaviour
         if (!showSpreadCost) return;
 
         for (int x = 0; x < width; x++)
+        {
             for (int y = 0; y < height; y++)
             {
                 GridNode node = grid[x, y];
                 int cost = GetSpreadCost(node.terrain);
 
                 GameObject labelObj = new GameObject($"Label_{x}_{y}");
-                labelObj.transform.position = node.worldPos + new Vector3(0, 0, -0.1f);
+                labelObj.transform.position = node.worldPos + new Vector3(0, 0.1f, 0f);
+                labelObj.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 labelObj.transform.SetParent(transform);
 
                 var tmp = labelObj.AddComponent<TextMeshPro>();
                 tmp.text = cost == TerrainConstants.BLOCKED ? "X" : cost.ToString();
-                tmp.fontSize = cellSize * 1.5f;
+                tmp.fontSize = 3f;
                 tmp.alignment = TextAlignmentOptions.Center;
                 tmp.color = Color.black;
                 tmp.sortingOrder = 10;
 
                 costLabels.Add(labelObj);
             }
+        }
     }
 
     void OnGUI()
@@ -264,7 +273,7 @@ public class GridManager : MonoBehaviour
     Vector2Int WorldToGrid(Vector3 worldPos)
     {
         int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
-        int y = Mathf.RoundToInt((worldPos.y - origin.y) / cellSize);
+        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
         return new Vector2Int(x, y);
     }
 
