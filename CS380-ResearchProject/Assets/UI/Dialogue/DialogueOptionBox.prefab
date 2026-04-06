@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2989657225111810157}
   - component: {fileID: 8139149467944933536}
   m_Layer: 5
-  m_Name: DialogueBox
+  m_Name: DialogueOptionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,7 +346,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: -17}
+  m_SizeDelta: {x: 39.2, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &7680997090568705540
 CanvasRenderer:
@@ -472,7 +472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000014543533}
+  m_AnchoredPosition: {x: 0, y: 0.00048713147}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8317938524078838377
@@ -498,7 +498,7 @@ MonoBehaviour:
   m_CellSize: {x: 1674.32, y: 100}
   m_Spacing: {x: 0, y: 20}
   m_Constraint: 2
-  m_ConstraintCount: 5
+  m_ConstraintCount: 100
 --- !u!95 &5903577629784468735
 Animator:
   serializedVersion: 7

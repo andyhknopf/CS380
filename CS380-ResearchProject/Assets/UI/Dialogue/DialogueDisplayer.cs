@@ -1,7 +1,14 @@
+/*
+ * DialogueDisplayer.cs
+ * Author: Andrew Knopf (andrew.knopf@digipen.edu)
+ * 4 April 2026
+ * DigiPen Institute of Technology 2026 (C)
+ */
 using UnityEngine;
 
-public class JenScript : MonoBehaviour
+public class DialogueDisplayer : MonoBehaviour
 {
+  
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
@@ -11,7 +18,6 @@ public class JenScript : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    if (Input.GetKeyDown(KeyCode.J))
-      Debug.Log("Jen");
+        
   }
 }
