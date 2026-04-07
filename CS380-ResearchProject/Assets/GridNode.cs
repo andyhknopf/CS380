@@ -14,4 +14,5 @@ public class GridNode
     public Vector3 worldPos;
     public GameObject visual;
     public int spreadCost = 1;
+    public int leftCount = 1;
 }

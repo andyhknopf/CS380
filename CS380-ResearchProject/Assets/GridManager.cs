@@ -77,7 +77,8 @@ public class GridManager : MonoBehaviour
                     y = y,
                     terrain = TerrainType.FIELD,
                     worldPos = origin + new Vector3(x * cellSize, 0f, y * cellSize),
-                    spreadCost = GetSpreadCost(TerrainType.FIELD)
+                    spreadCost = GetSpreadCost(TerrainType.FIELD),
+                    leftCount = GetSpreadCost(TerrainType.FIELD)
                 };
 
                 // background for borders
@@ -183,8 +184,9 @@ public class GridManager : MonoBehaviour
     void SpawnNewsIcon(GridNode node)
     {
         GameObject icon = new GameObject($"News_{node.x}_{node.y}");
-        icon.transform.position = node.worldPos + new Vector3(0, 0, -0.5f);
-        icon.transform.localScale = Vector3.one * (cellSize / defaultSprite.bounds.size.x * 0.5f);
+        icon.transform.position = node.worldPos + new Vector3(0, 0.1f, 0);
+        icon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        icon.transform.localScale = Vector3.one * (cellSize / defaultSprite.bounds.size.x * 0.2f);
 
         SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
         sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
