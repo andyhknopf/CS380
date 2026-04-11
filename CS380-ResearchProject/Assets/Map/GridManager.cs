@@ -300,4 +300,11 @@ public class GridManager : MonoBehaviour
 
     bool IsInBounds(int x, int y) =>
         x >= 0 && x < width && y >= 0 && y < height;
+
+    public void PlantNewsAtWorldPosition(Vector3 worldPos)
+    {
+        int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
+        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
+        TryPlantNews(x, y);
+    }
 }

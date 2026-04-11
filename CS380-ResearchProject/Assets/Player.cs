@@ -10,11 +10,14 @@ public class Player : MonoBehaviour
 
     public List<GameObject> targets;
 
+    private GridManager gridManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         moveSpeed /= 100.0f;
         incrementDelta /= 100.0f;
+        gridManager = FindFirstObjectByType<GridManager>();
     }
 
     // Update is called once per frame
@@ -42,7 +45,11 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
             moveSpeed = Mathf.Clamp(moveSpeed - incrementDelta, 0, 0.4f);
 
-        if(targets.Count > 0)
+        //TEMPORARY: CREATE NEWS FROM CURRENT POS
+        if (Input.GetKey(KeyCode.Z))
+            gridManager.PlantNewsAtWorldPosition(pos);
+
+        if (targets.Count > 0)
         {
             GameObject target = GetClosestTarget();
 
