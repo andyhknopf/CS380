@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ad506471a569b4697ec16e262460d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePrompt
-  _responses:
+  responses:
   - {fileID: 6094767567526714646, guid: d59e62d29b09e11428fde8dbf72512ed, type: 3}
   - {fileID: 820303046669048158, guid: 34e7e8217e60aee4cbcff6ad7ee4913f, type: 3}
   - {fileID: 2048025522786806102, guid: 3f90ef518c7f5c24f807e4be0675a2f4, type: 3}
   dialogueLines:
-  - Hello! My name is *name*!
+  - Hello!
+  - My name is *Name*.
   - How are you?
-  nextPrompt: {fileID: 0}

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
@@ -50,64 +52,81 @@ public class GridManager : MonoBehaviour
 
     void GenerateGrid()
     {
-        Camera cam = Camera.main;
-        float screenHeight = cam.orthographicSize * 2f;
-        float screenWidth = screenHeight * cam.aspect;
+      Camera cam = Camera.main;
+      float screenHeight = cam.orthographicSize * 2f;
+      float screenWidth = screenHeight * cam.aspect;
 
-        cellSize = Mathf.Min(screenWidth / width, screenHeight / height);
+      // cellSize = Mathf.Min(screenWidth / width, screenHeight / height);
 
-        float gridWidth = width * cellSize;
-        float gridHeight = height * cellSize;
+      float gridWidth = width * cellSize;
+      float gridHeight = height * cellSize;
 
-        origin = new Vector3(
-            -gridWidth / 2f + cellSize / 2f,
-            0f,
-            -gridHeight / 2f + cellSize / 2f
-        );
+      // Bake the navmesh at runtime
+      BakeNavMesh(gridWidth, gridHeight);
 
-        grid = new GridNode[width, height];
-        Vector2 spriteSize = defaultSprite.bounds.size;
+      origin = new Vector3(
+          -gridWidth / 2f + cellSize / 2f,
+          0f,
+          -gridHeight / 2f + cellSize / 2f
+      );
 
-        for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-            {
-                GridNode node = new GridNode
-                {
-                    x = x,
-                    y = y,
-                    terrain = TerrainType.FIELD,
-                    worldPos = origin + new Vector3(x * cellSize, 0f, y * cellSize),
-                    spreadCost = GetSpreadCost(TerrainType.FIELD),
-                    leftCount = GetSpreadCost(TerrainType.FIELD)
-                };
+      grid = new GridNode[width, height];
+      Vector2 spriteSize = defaultSprite.bounds.size;
 
-                // background for borders
-                GameObject bg = new GameObject($"BG_{x}_{y}");
-                bg.transform.position = node.worldPos;
-                bg.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-                bg.transform.SetParent(transform);
-                bg.transform.localScale = Vector3.one * (cellSize / spriteSize.x);
-                SpriteRenderer bgSr = bg.AddComponent<SpriteRenderer>();
-                bgSr.sprite = defaultSprite;
-                bgSr.color = Color.black;
-                bgSr.sortingOrder = 0;
+      for (int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++)
+        {
+          GridNode node = new GridNode
+          {
+            x = x,
+            y = y,
+            terrain = TerrainType.FIELD,
+            worldPos = origin + new Vector3(x * cellSize, 0f, y * cellSize),
+            spreadCost = GetSpreadCost(TerrainType.FIELD),
+            leftCount = GetSpreadCost(TerrainType.FIELD)
+          };
 
-                GameObject go = new GameObject($"Node_{x}_{y}");
-                go.transform.position = node.worldPos;
-                go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-                go.transform.SetParent(transform);
-                go.transform.localScale = Vector3.one * (cellSize / spriteSize.x * 0.9f);
-                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = defaultSprite;
-                sr.color = GetTerrainColor(node.terrain);
-                sr.sortingOrder = 1;
+          // background for borders
+          GameObject bg = new GameObject($"BG_{x}_{y}");
+          bg.transform.position = node.worldPos;
+          bg.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+          bg.transform.SetParent(transform);
+          bg.transform.localScale = Vector3.one * (cellSize / spriteSize.x);
+          SpriteRenderer bgSr = bg.AddComponent<SpriteRenderer>();
+          bgSr.sprite = defaultSprite;
+          bgSr.color = Color.black;
+          bgSr.sortingOrder = -5; // Render in back
+                                  // BoxCollider collider = bg.AddComponent<BoxCollider>();
 
-                node.visual = go;
-                grid[x, y] = node;
-            }
+          GameObject go = new GameObject($"Node_{x}_{y}");
+          go.transform.position = node.worldPos;
+          go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+          go.transform.SetParent(transform);
+          go.transform.localScale = Vector3.one * (cellSize / spriteSize.x * 0.9f);
+          SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+          sr.sprite = defaultSprite;
+          sr.color = GetTerrainColor(node.terrain);
+          sr.sortingOrder = bgSr.sortingOrder + 1;
+
+
+
+
+          node.visual = go;
+          grid[x, y] = node;
+        }
+  }
+
+  private static void BakeNavMesh(float gridWidth, float gridHeight)
+  {
+    NavMeshSurface navMesh = FindFirstObjectByType<NavMeshSurface>(); // Should be ParthCube
+    if (navMesh != null)
+    {
+      navMesh.transform.localScale = new Vector3(gridWidth, 0.0f, gridHeight);
+      navMesh.BuildNavMesh();
     }
+  }
 
-    void Update()
+  void Update()
     {
         // DEBUG - cost label
         if (prevShowSpreadCost != showSpreadCost)

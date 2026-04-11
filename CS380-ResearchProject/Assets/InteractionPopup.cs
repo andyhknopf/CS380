@@ -12,6 +12,8 @@ public class InteractionPopup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position = initialPos;
+      //transform.position = initialPos;
+      transform.rotation = Quaternion.identity;
+      // transform.LookAt(Camera.main.transform);
     }
 }

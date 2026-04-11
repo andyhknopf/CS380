@@ -29,14 +29,14 @@ public class DialogueManager : MonoBehaviour
 
     // Shouldn't start with a current prompt
     // _currentPrompt = null;
-    _currentPrompt = FindFirstObjectByType<DialoguePrompt>();
+    // _currentPrompt = FindFirstObjectByType<DialoguePrompt>();
   }
 
   private void Update()
   {
     // TODO: Replace with where you interact with NPCs
-    if (Input.GetKeyDown(KeyCode.T))
-      StartConversation(FindFirstObjectByType<DialoguePrompt>().gameObject);
+    // if (Input.GetKeyDown(KeyCode.T))
+    //   StartConversation(FindFirstObjectByType<DialoguePrompt>().gameObject);
 
     // On user click
     OnUserClick();
@@ -108,14 +108,14 @@ public class DialogueManager : MonoBehaviour
     // Check for errors
     Debug.Assert(initialPromptObject != null, "The intial conversation prompt GameObject should NEVER be null!");
 
+    // Assign the initial prompt
+    _currentPrompt = initialPromptObject.GetComponent<DialoguePrompt>();
+
     // Enable the dialogue box
     dialogueBox.StartDialogue(_currentPrompt.dialogueLines);
 
     // Enable the player response box
     dialogueOptionBox.gameObject.SetActive(true);
-
-    // Assign the initial prompt
-    _currentPrompt = initialPromptObject.GetComponent<DialoguePrompt>();
 
     // Check for errors
     if (_currentPrompt == null) 

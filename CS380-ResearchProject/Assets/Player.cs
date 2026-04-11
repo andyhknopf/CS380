@@ -49,6 +49,9 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Interact with " + target.name);
+
+                // 
+                DialogueManager.Instance.StartConversation(target.GetComponentInChildren<DialoguePrompt>().gameObject);
             }
 
         }
