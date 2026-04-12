@@ -1,9 +1,27 @@
 using System.Collections.Generic;
+using System.Drawing;
+using UnityEngine; // color
 
 public class News
 {
+    UnityEngine.Color color;
     public List<GridNode> reached = new List<GridNode>();
     private Queue<(GridNode node, int spreadAtTurn)> pending = new Queue<(GridNode, int)>();
+
+    public News(UnityEngine.Color color)
+    {
+        this.color = color;
+    }
+
+    public News()
+    {
+        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+    }
+
+    public UnityEngine.Color GetColor()
+    {
+        return this.color;
+    }
 
     public void Plant(GridNode origin)
     {

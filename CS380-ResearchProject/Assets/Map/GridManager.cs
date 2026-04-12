@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.AI.Navigation;
@@ -43,7 +44,7 @@ public class GridManager : MonoBehaviour
     private List<GameObject> newsIcons = new List<GameObject>();
     private int currentTurn = 0;
     private float timer = 0f;
-    private News news;
+    private List<News> newsList = new List<News>();
 
     void Start()
     {
@@ -179,10 +180,12 @@ public class GridManager : MonoBehaviour
 
     void OnTurnAdvanced()
     {
-        if (news == null) return;
-        List<GridNode> newlyReached = news.Spread(currentTurn, grid, width, height);
-        foreach (var node in newlyReached)
-            SpawnNewsIcon(node);
+        foreach (var news in newsList)
+        {
+            List<GridNode> newlyReached = news.Spread(currentTurn, grid, width, height);
+            foreach (var node in newlyReached)
+                SpawnNewsIcon(node, news.GetColor());
+        }
     }
 
     void TryPlantNews(int x, int y)
@@ -195,21 +198,41 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        news = new News();
+        News news = new News();
         news.Plant(node);
-        SpawnNewsIcon(node);
+        newsList.Add(news);
+        SpawnNewsIcon(node, news.GetColor());
     }
 
-    void SpawnNewsIcon(GridNode node)
+    public void PlantNewsAtWorldPosition(Vector3 worldPos)
     {
+        int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
+        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
+        TryPlantNews(x, y);
+    }
+
+    void SpawnNewsIcon(GridNode node, Color color)
+    {
+        node.newsColors.Add(color);
+
+        // DIVIDE NODE INTO 3*3 SO CAN SPAWN 9 ICONS MAX
+        int index = node.newsColors.Count - 1;
+        int col = index % 3;
+        int row = index / 3;
+
+        float subSize = cellSize / 3f * 0.6f;
+        float spacing = cellSize / 3f;
+        float offsetX = (col - 1) * spacing;
+        float offsetZ = (row - 1) * spacing;
+
         GameObject icon = new GameObject($"News_{node.x}_{node.y}");
-        icon.transform.position = node.worldPos + new Vector3(0, 0.1f, 0);
+        icon.transform.position = node.worldPos + new Vector3(offsetX, 0.5f, offsetZ);
         icon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        icon.transform.localScale = Vector3.one * (cellSize / defaultSprite.bounds.size.x * 0.2f);
+        icon.transform.localScale = Vector3.one * (subSize / defaultSprite.bounds.size.x);
 
         SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
         sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
-        sr.color = newsColor;
+        sr.color = color;
         sr.sortingOrder = 3;
 
         newsIcons.Add(icon);
@@ -291,6 +314,21 @@ public class GridManager : MonoBehaviour
         return grid[x, y];
     }
 
+    public List<News> GetNewsAtNode(int x, int y)
+    {
+        if (!IsInBounds(x, y)) return null;
+
+        List<News> result = new List<News>();
+        GridNode node = grid[x, y];
+
+        foreach (Color color in node.newsColors)
+            foreach (News news in newsList)
+                if (news.GetColor() == color)
+                    result.Add(news);
+
+        return result;
+    }
+
     Vector2Int WorldToGrid(Vector3 worldPos)
     {
         int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
@@ -300,11 +338,5 @@ public class GridManager : MonoBehaviour
 
     bool IsInBounds(int x, int y) =>
         x >= 0 && x < width && y >= 0 && y < height;
-
-    public void PlantNewsAtWorldPosition(Vector3 worldPos)
-    {
-        int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
-        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
-        TryPlantNews(x, y);
-    }
+    
 }

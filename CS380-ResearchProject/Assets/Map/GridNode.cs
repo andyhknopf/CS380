@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum TerrainType { FIELD = 0, FOREST = 1, MOUNTAIN = 2 }
@@ -14,5 +15,8 @@ public class GridNode
     public Vector3 worldPos;
     public GameObject visual;
     public int spreadCost = 1;
-    public int leftCount = 1;
+    public List<Color> newsColors = new List<Color>();
+    
+    public int leftCount = 1; // Still working on this implementation, currently not being used
+    // Purpose: fix the way delay(turn based) is working
 }
