@@ -16,7 +16,7 @@ public class Interaction : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "NPC")
+        if (collision.transform.tag == "NPC" || collision.transform.tag == "City") //really this should be "interactable"
         {
             if (!playerscript.targets.Contains(collision.gameObject))
             {
@@ -28,7 +28,7 @@ public class Interaction : MonoBehaviour
     }
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.transform.tag == "NPC")
+        if (collision.transform.tag == "NPC" || collision.transform.tag == "City")
         {
             if (playerscript.targets.Contains(collision.gameObject))
             {

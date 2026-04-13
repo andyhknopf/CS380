@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
@@ -57,8 +59,11 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("Interact with " + target.name);
 
-                // 
-                DialogueManager.Instance.StartConversation(target.GetComponentInChildren<DialoguePrompt>().gameObject);
+                if (target.tag == "NPC")
+                    DialogueManager.Instance.StartConversation(target.GetComponentInChildren<DialoguePrompt>().gameObject);
+                else if (target.tag == "City")
+                    EnterCity(target);
+
             }
 
         }
@@ -67,6 +72,15 @@ public class Player : MonoBehaviour
         transform.position = pos;
     }
 
+    private void EnterCity(GameObject target)
+    {
+        City cityScript = target.GetComponent<City>();
+        Debug.Assert(cityScript != null, "City script doesnt exist");
+
+        SceneManager.LoadScene(cityScript.citySceneName);
+
+        throw new NotImplementedException();
+    }
 
     public GameObject GetClosestTarget()
     {
