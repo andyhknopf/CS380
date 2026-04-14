@@ -15,7 +15,14 @@ public class News
 
     public News()
     {
-        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+
+    }
+
+    public News(News other)
+    {
+        this.color = other.color;
+        this.reached = other.reached;
+        this.pending = other.pending;
     }
 
     public UnityEngine.Color GetColor()
@@ -27,6 +34,7 @@ public class News
     {
         reached.Add(origin);
         pending.Enqueue((origin, origin.spreadCost));
+        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
     }
 
     public List<GridNode> Spread(int currentTurn, GridNode[,] grid, int width, int height)
