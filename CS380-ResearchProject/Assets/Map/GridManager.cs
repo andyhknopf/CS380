@@ -51,8 +51,7 @@ public class GridManager : MonoBehaviour
 
     void Start()
     {
-        if (gameObject.tag == "WorldGridManager")
-            DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
 
         GenerateGrid();
     }
