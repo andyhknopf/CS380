@@ -190,6 +190,21 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    void TryPlantGivenNews(int x, int y, News news)
+    {
+        if (!IsInBounds(x, y)) return;
+        GridNode node = grid[x, y];
+
+        if (node.spreadCost == TerrainConstants.BLOCKED)
+        {
+            return;
+        }
+
+        news.Plant(node);
+        newsList.Add(news);
+        SpawnNewsIcon(node, news.GetColor());
+    }
+
     void TryPlantNews(int x, int y)
     {
         if (!IsInBounds(x, y)) return;
@@ -204,6 +219,13 @@ public class GridManager : MonoBehaviour
         news.Plant(node);
         newsList.Add(news);
         SpawnNewsIcon(node, news.GetColor());
+    }
+
+    public void PlantGivenNewsAtWorldPosition(Vector3 worldPos, News news)
+    {
+        int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
+        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
+        TryPlantGivenNews(x, y, news);
     }
 
     public void PlantNewsAtWorldPosition(Vector3 worldPos)
@@ -340,5 +362,14 @@ public class GridManager : MonoBehaviour
 
     bool IsInBounds(int x, int y) =>
         x >= 0 && x < width && y >= 0 && y < height;
-    
+
+
+    public float GetNormalizedDistance(GridNode a, GridNode b)
+    {
+        float maxDistance = Vector3.Distance(
+            grid[0, 0].worldPos,
+            grid[width - 1, height - 1].worldPos
+        );
+        return Vector3.Distance(a.worldPos, b.worldPos) / maxDistance;
+    }
 }

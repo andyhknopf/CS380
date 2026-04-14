@@ -55,6 +55,7 @@ public class News
 
         reached.Add(origin);
         pending.Enqueue((origin, origin.spreadCost));
+        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
     }
 
     public List<GridNode> Spread(int currentTurn, GridNode[,] grid, int width, int height)
