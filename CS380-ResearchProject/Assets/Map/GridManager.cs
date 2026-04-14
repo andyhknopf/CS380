@@ -194,6 +194,21 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    void TryPlantGivenNews(int x, int y, News news)
+    {
+        if (!IsInBounds(x, y)) return;
+        GridNode node = grid[x, y];
+
+        if (node.spreadCost == TerrainConstants.BLOCKED)
+        {
+            return;
+        }
+
+        news.Plant(node);
+        newsList.Add(news);
+        SpawnNewsIcon(node, news.GetColor());
+    }
+
     void TryPlantNews(int x, int y)
     {
         if (!IsInBounds(x, y)) return;
