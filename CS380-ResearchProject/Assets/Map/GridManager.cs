@@ -225,6 +225,13 @@ public class GridManager : MonoBehaviour
         SpawnNewsIcon(node, news.GetColor());
     }
 
+    public void PlantGivenNewsAtWorldPosition(Vector3 worldPos, News news)
+    {
+        int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
+        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
+        TryPlantGivenNews(x, y, news);
+    }
+
     public void PlantNewsAtWorldPosition(Vector3 worldPos)
     {
         int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
