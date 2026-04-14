@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6416664264581574533}
   - component: {fileID: 1522269313090010956}
+  - component: {fileID: 5414306327569488218}
   m_Layer: 0
   m_Name: DP_Greeting
   m_TagString: Untagged
@@ -45,10 +46,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePrompt
   responses:
-  - {fileID: 6094767567526714646, guid: d59e62d29b09e11428fde8dbf72512ed, type: 3}
-  - {fileID: 820303046669048158, guid: 34e7e8217e60aee4cbcff6ad7ee4913f, type: 3}
-  - {fileID: 2048025522786806102, guid: 3f90ef518c7f5c24f807e4be0675a2f4, type: 3}
+  - {fileID: 4449452636545292766, guid: 70e69c10162f50e458dc907c544fb011, type: 3}
   dialogueLines:
-  - Hello!
-  - My name is *Name*.
-  - How are you?
+  - Hi!
+--- !u!114 &5414306327569488218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449452636545292766}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f572db3606071478b847ee3e545557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Greeting
+  firstTimeDialogueLines:
+  - Nice to meet you. Where are you from?
+  repeatDialogue:
+  - Good to see you again. What's going on?

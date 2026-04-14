@@ -8,6 +8,7 @@ public static class TerrainConstants
     public const int BLOCKED = -1;
 }
 
+[System.Serializable]
 public class GridNode
 {
     public int x, y;

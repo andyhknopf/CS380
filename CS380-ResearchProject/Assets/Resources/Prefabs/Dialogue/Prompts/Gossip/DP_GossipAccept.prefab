@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6416664264581574533}
   - component: {fileID: 1522269313090010956}
   m_Layer: 0
-  m_Name: DP_Goodbye
+  m_Name: DP_GossipAccept
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ad506471a569b4697ec16e262460d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePrompt
-  responses: []
+  responses:
+  - {fileID: 2048025522786806102, guid: 00161e758a21a96449092af24ce6f909, type: 3}
+  - {fileID: 2048025522786806102, guid: 7d7e2993d0d671943bf266cd156a1557, type: 3}
+  - {fileID: 2048025522786806102, guid: e3513fa907d1ea64eb7ef95352690de2, type: 3}
+  - {fileID: 2048025522786806102, guid: b7e3999795bce0a488fb89f4a6978879, type: 3}
+  - {fileID: 2048025522786806102, guid: 7173e24041432c441ad35209386bf5fe, type: 3}
+  - {fileID: 2048025522786806102, guid: 3a317fd360f63c34e94db97db3927ac2, type: 3}
+  - {fileID: 2048025522786806102, guid: c9cede9926f8ae244ac90d5c6009ee6e, type: 3}
+  - {fileID: 2048025522786806102, guid: 5aaa4a570037f7c48aa5558c8d1686fd, type: 3}
+  - {fileID: 2048025522786806102, guid: 9830376073ce7d64294e0ff2855d3041, type: 3}
   dialogueLines:
-  - Goodbye then!
+  - What do you want to gossip about?

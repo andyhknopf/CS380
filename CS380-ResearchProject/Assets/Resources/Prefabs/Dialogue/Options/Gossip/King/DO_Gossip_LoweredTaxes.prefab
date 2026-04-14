@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2025537182149410585
+--- !u!1 &98566387187632666
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4973271312352225842}
-  - component: {fileID: 5025617943231500285}
-  - component: {fileID: 1882083162117053793}
+  - component: {fileID: 2969570317273807210}
+  - component: {fileID: 2910720708551226908}
+  - component: {fileID: 611655702384549010}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -18,40 +18,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &4973271312352225842
+--- !u!224 &2969570317273807210
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025537182149410585}
+  m_GameObject: {fileID: 98566387187632666}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7898840640181631921}
+  m_Father: {fileID: 8064870744261253666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -40, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5025617943231500285
+--- !u!222 &2910720708551226908
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025537182149410585}
+  m_GameObject: {fileID: 98566387187632666}
   m_CullTransparentMesh: 1
---- !u!114 &1882083162117053793
+--- !u!114 &611655702384549010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025537182149410585}
+  m_GameObject: {fileID: 98566387187632666}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Good!
+  m_text: The king lowered the taxes!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &6094767567526714646
+--- !u!1 &2048025522786806102
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,53 +145,53 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7898840640181631921}
-  - component: {fileID: 3215671417959959665}
-  - component: {fileID: 1904387787324486165}
-  - component: {fileID: 7277702536607485391}
-  - component: {fileID: 4266452354037384071}
+  - component: {fileID: 8064870744261253666}
+  - component: {fileID: 2545434799282864339}
+  - component: {fileID: 4334519192104891217}
+  - component: {fileID: 6337748935751163361}
+  - component: {fileID: 2851645171757739611}
   m_Layer: 5
-  m_Name: DO_Greeting_Positive
+  m_Name: DO_Gossip_LoweredTaxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &7898840640181631921
+--- !u!224 &8064870744261253666
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094767567526714646}
+  m_GameObject: {fileID: 2048025522786806102}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4973271312352225842}
+  - {fileID: 2969570317273807210}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3215671417959959665
+--- !u!222 &2545434799282864339
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094767567526714646}
+  m_GameObject: {fileID: 2048025522786806102}
   m_CullTransparentMesh: 1
---- !u!114 &1904387787324486165
+--- !u!114 &4334519192104891217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094767567526714646}
+  m_GameObject: {fileID: 2048025522786806102}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -215,13 +215,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7277702536607485391
+--- !u!114 &6337748935751163361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094767567526714646}
+  m_GameObject: {fileID: 2048025522786806102}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -255,11 +255,11 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1904387787324486165}
+  m_TargetGraphic: {fileID: 4334519192104891217}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4266452354037384071}
+      - m_Target: {fileID: 2851645171757739611}
         m_TargetAssemblyTypeName: DialogueOption, Assembly-CSharp
         m_MethodName: Select
         m_Mode: 1
@@ -271,16 +271,56 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4266452354037384071
+--- !u!114 &2851645171757739611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094767567526714646}
+  m_GameObject: {fileID: 2048025522786806102}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60086eebf4caef346b48280381fa65a9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  _nextPrompt: {fileID: 4449452636545292766, guid: 7357cc26d8ff2a34a968de833a593879, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueOption
+  _nextPrompt: {fileID: 4449452636545292766, guid: 6239f44274b0d794383567e1031687e6, type: 3}
+  text: Did you hear that the king lowered taxes?
+  isNewsOption: 1
+  news:
+    reached:
+    - x: 0
+      y: 0
+      terrain: 0
+      worldPos: {x: 0, y: 0, z: 0}
+      visual: {fileID: 0}
+      spreadCost: 0
+      newsColors: []
+      leftCount: 0
+    subject:
+      name: the King
+      gridLocation:
+        x: 0
+        y: 0
+        terrain: 0
+        worldPos: {x: 0, y: 0, z: 0}
+        visual: {fileID: 0}
+        spreadCost: 0
+        newsColors: []
+        leftCount: 0
+      positiveOpinionStrings:
+      - I've waiting my whole life to hear this
+      - I feel so good about it
+      - I like it a lot
+      neutralOpinionStrings:
+      - I don't really care about that
+      - Meh that doesn't really matter
+      - '*Yawn* that stuff bores me'
+      negativeOpinionStrings:
+      - I am fuming about that
+      - That really is the worst
+      - Tonight I will jump off the bridge
+    action:
+      name: RaisedTaxes
+      text: has raised taxes
+    newsString: 
+    influencer: 1

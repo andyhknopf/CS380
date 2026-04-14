@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 6337748935751163361}
   - component: {fileID: 2851645171757739611}
   m_Layer: 5
-  m_Name: DO_Fact_RaisedTaxes
+  m_Name: DO_Gossip_GovernerCheating
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,10 +172,10 @@ RectTransform:
   - {fileID: 2969570317273807210}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2545434799282864339
 CanvasRenderer:
@@ -283,4 +283,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60086eebf4caef346b48280381fa65a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueOption
-  _nextPrompt: {fileID: 4449452636545292766, guid: b9d266f037f49ca49aed5f2a7dc99a28, type: 3}
+  _nextPrompt: {fileID: 4449452636545292766, guid: 6239f44274b0d794383567e1031687e6, type: 3}
+  text: Did you hear that governer of *town* was caught cheating on his wife?
+  isNewsOption: 1
+  news:
+    reached:
+    - x: 0
+      y: 0
+      terrain: 0
+      worldPos: {x: 0, y: 0, z: 0}
+      visual: {fileID: 0}
+      spreadCost: 0
+      newsColors: []
+      leftCount: 0
+    subject:
+      name: '*TOWN_NAME*'
+      gridLocation:
+        x: 0
+        y: 0
+        terrain: 0
+        worldPos: {x: 0, y: 0, z: 0}
+        visual: {fileID: 0}
+        spreadCost: 0
+        newsColors: []
+        leftCount: 0
+      positiveOpinionStrings:
+      - I've waiting my whole life to hear this
+      - I feel so good about it
+      - I like it a lot
+      neutralOpinionStrings:
+      - I don't really care about that
+      - Meh that doesn't really matter
+      - '*Yawn* that stuff bores me'
+      negativeOpinionStrings:
+      - I am fuming about that
+      - That really is the worst
+      - Tonight I will jump off the bridge
+    action:
+      name: MayorCaught
+      text: just caught their mayor cheating on his wife
+    newsString: 
+    influencer: 0

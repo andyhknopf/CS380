@@ -7,49 +7,51 @@ using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    [SerializeField] private int width = 10;
-    [SerializeField] private int height = 10;
-    [SerializeField] private float cellSize = 1f;
+  [Header("Grid Settings")]
+  [SerializeField] private int width = 10;
+  [SerializeField] private int height = 10;
+  [SerializeField] private float cellSize = 1f;
 
-    [Header("Terrain Sprites")]
-    [SerializeField] private Sprite defaultSprite;
+  [Header("Terrain Sprites")]
+  [SerializeField] private Sprite defaultSprite;
 
-    [Header("Terrain Colors")]
-    [SerializeField] private Color fieldColor = Color.green;
-    [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
-    [SerializeField] private Color mountainColor = Color.gray;
+  [Header("Terrain Colors")]
+  [SerializeField] private Color fieldColor = Color.green;
+  [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
+  [SerializeField] private Color mountainColor = Color.gray;
 
-    [Header("Terrain Data")]
-    [SerializeField] private TerrainData[] terrainDataList;
+  [Header("Terrain Data")]
+  [SerializeField] private TerrainData[] terrainDataList;
 
-    [Header("Edit Settings")]
-    [SerializeField] private TerrainType selectedTerrain = TerrainType.FIELD;
+  [Header("Edit Settings")]
+  [SerializeField] private TerrainType selectedTerrain = TerrainType.FIELD;
 
-    [Header("Debug")]
-    [SerializeField] private bool showSpreadCost = false;
-    private bool prevShowSpreadCost;
+  [Header("Debug")]
+  [SerializeField] private bool showSpreadCost = false;
+  private bool prevShowSpreadCost;
 
-    [Header("Turn Settings")]
-    [SerializeField] private float turnSpeed = 1f;
-    [SerializeField] private bool isTurnPaused = true;
+  [Header("Turn Settings")]
+  [SerializeField] private float turnSpeed = 1f;
+  [SerializeField] private bool isTurnPaused = true;
 
-    [Header("News Icon")]
-    [SerializeField] private Sprite newsSprite;
-    [SerializeField] private Color newsColor = Color.yellow;
+  [Header("News Icon")]
+  [SerializeField] private Sprite newsSprite;
+  [SerializeField] private Color newsColor = Color.yellow;
 
-    private GridNode[,] grid;
-    private Vector3 origin;
-    private List<GameObject> costLabels = new List<GameObject>();
-    private List<GameObject> newsIcons = new List<GameObject>();
-    private int currentTurn = 0;
-    private float timer = 0f;
-    private List<News> newsList = new List<News>();
+  private GridNode[,] grid;
+  private Vector3 origin;
+  private List<GameObject> costLabels = new List<GameObject>();
+  private List<GameObject> newsIcons = new List<GameObject>();
+  private int currentTurn = 0;
+  private float timer = 0f;
+  private List<News> newsList = new List<News>();
 
-    void Start()
-    {
-        GenerateGrid();
-    }
+
+  void Start()
+  {
+    GenerateGrid();
+    DontDestroyOnLoad(gameObject);
+  }
 
     void GenerateGrid()
     {

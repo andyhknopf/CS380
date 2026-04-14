@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
   public DialogueOptionBox dialogueOptionBox;
   DialoguePrompt _currentPrompt;
   [HideInInspector] public bool onLastPrompt;
-
+  [HideInInspector] public NPCBrain currentNpc;
   private void Awake()
   {
     // Set the instance of the singleton manager
@@ -59,6 +59,8 @@ public class DialogueManager : MonoBehaviour
       dialogueBox = FindFirstObjectByType<DialogueBox>(FindObjectsInactive.Include);
     if (dialogueOptionBox == null)
       dialogueOptionBox = FindFirstObjectByType<DialogueOptionBox>(FindObjectsInactive.Include);
+
+    currentNpc = null;
 
     // Check for errors
     Debug.Assert(dialogueBox != null && dialogueOptionBox != null, "There isn't a dialogue box or dialogue option box in the scene!");
@@ -103,7 +105,7 @@ public class DialogueManager : MonoBehaviour
     dialogueOptionBox.gameObject.SetActive(false);
   }
 
-  public void StartConversation(GameObject initialPromptObject)
+  public void StartConversation(GameObject initialPromptObject, NPCBrain npcBrain)
   {
     // Check for errors
     Debug.Assert(initialPromptObject != null, "The intial conversation prompt GameObject should NEVER be null!");
@@ -120,6 +122,8 @@ public class DialogueManager : MonoBehaviour
     // Check for errors
     if (_currentPrompt == null) 
       InitialPromptErrorCheck(initialPromptObject);
+
+    currentNpc = npcBrain;
 
     // Add the new responses to the dialogue box
     foreach (GameObject response in _currentPrompt.responses)
