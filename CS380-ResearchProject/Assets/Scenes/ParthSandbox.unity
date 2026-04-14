@@ -1759,7 +1759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b307c6fc574569409de9776f1b405b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  citySceneName: 
+  citySceneName: LittleCity
+  dummyDataForCity: 0
 --- !u!1 &1127844743
 GameObject:
   m_ObjectHideFlags: 0

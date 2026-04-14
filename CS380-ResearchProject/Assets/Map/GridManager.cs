@@ -46,8 +46,14 @@ public class GridManager : MonoBehaviour
     private float timer = 0f;
     private List<News> newsList = new List<News>();
 
+    public Vector2 MapWorldSize => new Vector2(width * cellSize, height * cellSize);
+
+
     void Start()
     {
+        if (gameObject.tag == "WorldGridManager")
+            DontDestroyOnLoad(gameObject);
+
         GenerateGrid();
     }
 
@@ -338,5 +344,14 @@ public class GridManager : MonoBehaviour
 
     bool IsInBounds(int x, int y) =>
         x >= 0 && x < width && y >= 0 && y < height;
-    
+
+
+    public float GetNormalizedDistance(GridNode a, GridNode b)
+    {
+        float maxDistance = Vector3.Distance(
+            grid[0, 0].worldPos,
+            grid[width - 1, height - 1].worldPos
+        );
+        return Vector3.Distance(a.worldPos, b.worldPos) / maxDistance;
+    }
 }
