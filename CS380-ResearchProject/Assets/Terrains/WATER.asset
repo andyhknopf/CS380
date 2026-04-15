@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4155a0c83186b54eb8fffefaceb3266, type: 3}
-  m_Name: MOUNTAIN
+  m_Name: WATER
   m_EditorClassIdentifier: Assembly-CSharp::TerrainData
-  terrainType: 2
-  spreadCost: 6
+  terrainType: 3
+  spreadCost: -1

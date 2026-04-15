@@ -2043,6 +2043,26 @@ PrefabInstance:
       propertyPath: cellSize
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: waterColor.b
+      value: 0.7735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: waterColor.g
+      value: 0.515286
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: waterColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: terrainDataList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: 'terrainDataList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 59f68c3dcf251fc4abf358e62cf930f0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

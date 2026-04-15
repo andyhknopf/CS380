@@ -51,6 +51,9 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
             gridManager.PlantNewsAtWorldPosition(pos);
 
+        if (Input.GetKey(KeyCode.V))
+            gridManager.EditMap(pos);
+
         if (targets.Count > 0)
         {
             GameObject target = GetClosestTarget();

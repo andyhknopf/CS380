@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TerrainType { FIELD = 0, FOREST = 1, MOUNTAIN = 2 }
+public enum TerrainType { FIELD = 0, FOREST = 1, MOUNTAIN = 2, WATER = 3 }
 
 public static class TerrainConstants
 {

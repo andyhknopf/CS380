@@ -7,42 +7,45 @@ public class News
 {
     UnityEngine.Color color;
     [HideInInspector]public List<GridNode> reached = new List<GridNode>();
-    private Queue<(GridNode node, int spreadAtTurn)> pending = new Queue<(GridNode, int)>();
     public Subject subject;
     public NewsAction action;
     [HideInInspector] public string newsString;
+    [SerializeField] public int speed = 1;
 
+    private SortedList<int, Queue<GridNode>> pending = new SortedList<int, Queue<GridNode>>();
 
     [SerializeField]
     public OpinionInfluencer influencer;
     public enum OpinionInfluencer : int
     {
-      DISTANCE_FROM_SUBJECT = 0,
-      LOYALTY_TO_KING = 1,
-      LATTITUDE = 2,
+        DISTANCE_FROM_SUBJECT = 0,
+        LOYALTY_TO_KING = 1,
+        LATTITUDE = 2,
     }
+
 
 
     public News(UnityEngine.Color color)
     {
-      newsString = subject.name + " " + action.text;
-      this.color = color;
+        newsString = subject.name + " " + action.text;
+        this.color = color;
     }
 
     public News()
     {
-      //newsString = subject.name + " " + action.text;
+        //newsString = subject.name + " " + action.text;
     }
 
-  public News(News other)
-  {
-    color = other.color;
-    reached = other.reached;
-    pending = other.pending;
-    subject = other.subject;
-    action = other.action;
-    newsString = other.newsString;
-  }
+    public News(News other)
+    {
+        color = other.color;
+        reached = other.reached;
+        pending = other.pending;
+        subject = other.subject;
+        action = other.action;
+        newsString = other.newsString;
+        speed = other.speed;
+    }
 
     public UnityEngine.Color GetColor()
     {
@@ -54,25 +57,31 @@ public class News
         this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 
         reached.Add(origin);
-        pending.Enqueue((origin, origin.spreadCost));
-        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+        int initialDelay = speed * origin.spreadCost;
+        Enqueue(origin, initialDelay);
     }
 
     public List<GridNode> Spread(int currentTurn, GridNode[,] grid, int width, int height)
     {
         List<GridNode> newlyReached = new List<GridNode>();
 
-        while (pending.Count > 0 && pending.Peek().spreadAtTurn <= currentTurn)
+        while (pending.Count > 0 && pending.Keys[0] <= currentTurn)
         {
-            var (node, _) = pending.Dequeue();
+            var queue = pending.Values[0];
+            var node = queue.Dequeue();
+            if (queue.Count == 0)
+                pending.RemoveAt(0);
 
             foreach (var neighbor in GetNeighbors(node, grid, width, height))
             {
                 if (reached.Contains(neighbor)) continue;
                 if (neighbor.spreadCost == TerrainConstants.BLOCKED) continue;
 
+                int delay = speed * neighbor.spreadCost;
+                int arrivalTurn = currentTurn + delay;
+
                 reached.Add(neighbor);
-                pending.Enqueue((neighbor, currentTurn + neighbor.spreadCost));
+                Enqueue(neighbor, arrivalTurn);
                 newlyReached.Add(neighbor);
             }
         }
@@ -95,5 +104,11 @@ public class News
         }
 
         return neighbors;
+    }
+    private void Enqueue(GridNode node, int arrivalTurn)
+    {
+        if (!pending.ContainsKey(arrivalTurn))
+            pending[arrivalTurn] = new Queue<GridNode>();
+        pending[arrivalTurn].Enqueue(node);
     }
 }

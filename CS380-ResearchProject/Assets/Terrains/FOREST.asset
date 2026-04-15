@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FOREST
   m_EditorClassIdentifier: Assembly-CSharp::TerrainData
   terrainType: 1
-  spreadCost: 2
+  spreadCost: 3

@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Color fieldColor = Color.green;
     [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
     [SerializeField] private Color mountainColor = Color.gray;
+    [SerializeField] private Color waterColor = Color.gray;
 
     [Header("Terrain Data")]
     [SerializeField] private TerrainData[] terrainDataList;
@@ -162,19 +163,20 @@ public class GridManager : MonoBehaviour
         }
 
         // TERRAIN(MAP) EDIT
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 screenPos = new Vector3(
-                Input.mousePosition.x,
-                Input.mousePosition.y,
-                Camera.main.transform.position.y
-            );
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-            worldPos.y = 0f;
-            Vector2Int gridPos = WorldToGrid(worldPos);
-            SetTerrain(gridPos.x, gridPos.y, selectedTerrain);
-            UpdateCostLabels();
-        }
+        // => Key 'V' from the player
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Vector3 screenPos = new Vector3(
+        //        Input.mousePosition.x,
+        //        Input.mousePosition.y,
+        //        Camera.main.transform.position.y
+        //    );
+        //    Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        //    worldPos.y = 0f;
+        //    Vector2Int gridPos = WorldToGrid(worldPos);
+        //    SetTerrain(gridPos.x, gridPos.y, selectedTerrain);
+        //    UpdateCostLabels();
+        //}
 
         // TEMP & DEBUGGING for news creatino
         if (Input.GetMouseButtonDown(1))
@@ -224,6 +226,8 @@ public class GridManager : MonoBehaviour
         RefreshNewsIcons(); // do this every turn
     }
 
+    
+
     void TryPlantGivenNews(int x, int y, News news)
     {
         if (!IsInBounds(x, y)) return;
@@ -262,6 +266,14 @@ public class GridManager : MonoBehaviour
         RefreshNewsIcons();
     }
 
+    // Called from the player
+    public void EditMap(Vector3 worldPos)
+    {
+        int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
+        int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);
+        SetTerrain(x, y, selectedTerrain);
+    }
+
     public void PlantGivenNewsAtWorldPosition(Vector3 worldPos, News news)
     {
         int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
@@ -276,32 +288,32 @@ public class GridManager : MonoBehaviour
         TryPlantNews(x, y);
     }
 
-    void SpawnNewsIcon(GridNode node, Color color)
-    {
-        node.newsColors.Add(color);
+    //void SpawnNewsIcon(GridNode node, Color color)
+    //{
+    //    node.newsColors.Add(color);
 
-        // DIVIDE NODE INTO 3*3 SO CAN SPAWN 9 ICONS MAX
-        int index = node.newsColors.Count - 1;
-        int col = index % 3;
-        int row = index / 3;
+    //    // DIVIDE NODE INTO 3*3 SO CAN SPAWN 9 ICONS MAX
+    //    int index = node.newsColors.Count - 1;
+    //    int col = index % 3;
+    //    int row = index / 3;
 
-        float subSize = cellSize / 3f * 0.6f;
-        float spacing = cellSize / 3f;
-        float offsetX = (col - 1) * spacing;
-        float offsetZ = (row - 1) * spacing;
+    //    float subSize = cellSize / 3f * 0.6f;
+    //    float spacing = cellSize / 3f;
+    //    float offsetX = (col - 1) * spacing;
+    //    float offsetZ = (row - 1) * spacing;
 
-        GameObject icon = new GameObject($"News_{node.x}_{node.y}");
-        icon.transform.position = node.worldPos + new Vector3(offsetX, 0.5f, offsetZ);
-        icon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-        icon.transform.localScale = Vector3.one * (subSize / defaultSprite.bounds.size.x);
+    //    GameObject icon = new GameObject($"News_{node.x}_{node.y}");
+    //    icon.transform.position = node.worldPos + new Vector3(offsetX, 0.5f, offsetZ);
+    //    icon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+    //    icon.transform.localScale = Vector3.one * (subSize / defaultSprite.bounds.size.x);
 
-        SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
-        sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
-        sr.color = color;
-        sr.sortingOrder = 3;
+    //    SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
+    //    sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
+    //    sr.color = color;
+    //    sr.sortingOrder = 3;
 
-        newsIcons.Add(icon);
-    }
+    //    newsIcons.Add(icon);
+    //}
 
     void RefreshNewsIcons()
     {
@@ -390,6 +402,7 @@ public class GridManager : MonoBehaviour
             TerrainType.FIELD => fieldColor,
             TerrainType.FOREST => forestColor,
             TerrainType.MOUNTAIN => mountainColor,
+            TerrainType.WATER => waterColor,
             _ => Color.white
         };
     }
@@ -472,6 +485,7 @@ public class GridManager : MonoBehaviour
             icon.GetComponent<SpriteRenderer>().enabled = isVisible;
     }
 
+    //////////////////////////////////////////////////////////////
     // Save as JSON
     private string SavePath()
     {
