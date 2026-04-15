@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -58,6 +59,7 @@ public class GridManager : MonoBehaviour
     {
         GenerateGrid();
         DontDestroyOnLoad(gameObject);
+        LoadMap();
     }
 
     void GenerateGrid()
@@ -204,6 +206,10 @@ public class GridManager : MonoBehaviour
             currentNewsIndex = Mathf.Min(newsList.Count - 1, currentNewsIndex + 1);
             RefreshNewsIcons();
         }
+
+        // SAVE to JSON
+        if (Input.GetKeyDown(KeyCode.C))
+            SaveMap();
     }
 
     void OnTurnAdvanced()
@@ -464,5 +470,43 @@ public class GridManager : MonoBehaviour
 
         foreach (var icon in newsIcons)
             icon.GetComponent<SpriteRenderer>().enabled = isVisible;
+    }
+
+    // Save as JSON
+    private string SavePath()
+    {
+        return Path.Combine(Application.persistentDataPath, $"map_{gameObject.name}.json");
+    }
+
+    public void SaveMap()
+    {
+        MapSaveData data = new MapSaveData();
+        data.width = width;
+        data.height = height;
+        data.terrainData = new int[width * height];
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                data.terrainData[x * height + y] = (int)grid[x, y].terrain;
+
+        File.WriteAllText(SavePath(), JsonUtility.ToJson(data));
+        Debug.Log($"Map saved: {SavePath()}");
+    }
+
+    public void LoadMap()
+    {
+        if (!File.Exists(SavePath()))
+        {
+            Debug.Log("No save file found, using default map.");
+            return;
+        }
+
+        MapSaveData data = JsonUtility.FromJson<MapSaveData>(File.ReadAllText(SavePath()));
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                SetTerrain(x, y, (TerrainType)data.terrainData[x * height + y]);
+
+        Debug.Log($"Map loaded: {SavePath()}");
     }
 }
