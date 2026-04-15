@@ -31,7 +31,7 @@ public class News
 
     public News()
     {
-      newsString = subject.name + " " + action.text;
+      //newsString = subject.name + " " + action.text;
     }
 
   public News(News other)

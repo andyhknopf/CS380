@@ -7,10 +7,10 @@ using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
-  [Header("Grid Settings")]
-  [SerializeField] private int width = 10;
-  [SerializeField] private int height = 10;
-  [SerializeField] private float cellSize = 1f;
+    [Header("Grid Settings")]
+    [SerializeField] private int width = 10;
+    [SerializeField] private int height = 10;
+    [SerializeField] private float cellSize = 1f;
 
     [Header("News Display")] // which news to display?
     [SerializeField, Range(0, 100)] private int currentNewsIndex = 0;
@@ -19,28 +19,28 @@ public class GridManager : MonoBehaviour
     [Header("Terrain Sprites")]
     [SerializeField] private Sprite defaultSprite;
 
-  [Header("Terrain Colors")]
-  [SerializeField] private Color fieldColor = Color.green;
-  [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
-  [SerializeField] private Color mountainColor = Color.gray;
+    [Header("Terrain Colors")]
+    [SerializeField] private Color fieldColor = Color.green;
+    [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
+    [SerializeField] private Color mountainColor = Color.gray;
 
-  [Header("Terrain Data")]
-  [SerializeField] private TerrainData[] terrainDataList;
+    [Header("Terrain Data")]
+    [SerializeField] private TerrainData[] terrainDataList;
 
-  [Header("Edit Settings")]
-  [SerializeField] private TerrainType selectedTerrain = TerrainType.FIELD;
+    [Header("Edit Settings")]
+    [SerializeField] private TerrainType selectedTerrain = TerrainType.FIELD;
 
-  [Header("Debug")]
-  [SerializeField] private bool showSpreadCost = false;
-  private bool prevShowSpreadCost;
+    [Header("Debug")]
+    [SerializeField] private bool showSpreadCost = false;
+    private bool prevShowSpreadCost;
 
-  [Header("Turn Settings")]
-  [SerializeField] private float turnSpeed = 1f;
-  [SerializeField] private bool isTurnPaused = true;
+    [Header("Turn Settings")]
+    [SerializeField] private float turnSpeed = 1f;
+    [SerializeField] private bool isTurnPaused = true;
 
-  [Header("News Icon")]
-  [SerializeField] private Sprite newsSprite;
-  [SerializeField] private Color newsColor = Color.yellow;
+    [Header("News Icon")]
+    [SerializeField] private Sprite newsSprite;
+    [SerializeField] private Color newsColor = Color.yellow;
 
     private GridNode[,] grid;
     private Vector3 origin;
@@ -54,89 +54,91 @@ public class GridManager : MonoBehaviour
     public Vector2 MapWorldSize => new Vector2(width * cellSize, height * cellSize);
 
 
-  void Start()
-  {
-    GenerateGrid();
-    DontDestroyOnLoad(gameObject);
-  }
+    void Start()
+    {
+        GenerateGrid();
+        DontDestroyOnLoad(gameObject);
+    }
 
     void GenerateGrid()
     {
-      Camera cam = Camera.main;
-      float screenHeight = cam.orthographicSize * 2f;
-      float screenWidth = screenHeight * cam.aspect;
+        Camera cam = Camera.main;
+        float screenHeight = cam.orthographicSize * 2f;
+        float screenWidth = screenHeight * cam.aspect;
 
-      // cellSize = Mathf.Min(screenWidth / width, screenHeight / height);
+        // cellSize = Mathf.Min(screenWidth / width, screenHeight / height);
 
-      float gridWidth = width * cellSize;
-      float gridHeight = height * cellSize;
+        float gridWidth = width * cellSize;
+        float gridHeight = height * cellSize;
 
-      // Bake the navmesh at runtime
-      BakeNavMesh(gridWidth, gridHeight);
+        // Bake the navmesh at runtime
+        BakeNavMesh(gridWidth, gridHeight);
 
-      origin = new Vector3(
-          -gridWidth / 2f + cellSize / 2f,
-          0f,
-          -gridHeight / 2f + cellSize / 2f
-      );
+        origin = new Vector3(
+            -gridWidth / 2f + cellSize / 2f,
+            0f,
+            -gridHeight / 2f + cellSize / 2f
+        );
 
-      grid = new GridNode[width, height];
-      Vector2 spriteSize = defaultSprite.bounds.size;
+        grid = new GridNode[width, height];
+        Vector2 spriteSize = defaultSprite.bounds.size;
 
-      for (int x = 0; x < width; x++)
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-          GridNode node = new GridNode
-          {
-            x = x,
-            y = y,
-            terrain = TerrainType.FIELD,
-            worldPos = origin + new Vector3(x * cellSize, 0f, y * cellSize),
-            spreadCost = GetSpreadCost(TerrainType.FIELD),
-            leftCount = GetSpreadCost(TerrainType.FIELD)
-          };
+            for (int y = 0; y < height; y++)
+            {
+                GridNode node = new GridNode
+                {
+                    x = x,
+                    y = y,
+                    terrain = TerrainType.FIELD,
+                    worldPos = origin + new Vector3(x * cellSize, 0f, y * cellSize),
+                    spreadCost = GetSpreadCost(TerrainType.FIELD),
+                    leftCount = GetSpreadCost(TerrainType.FIELD)
+                };
 
-          // background for borders
-          GameObject bg = new GameObject($"BG_{x}_{y}");
-          bg.transform.position = node.worldPos;
-          bg.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-          bg.transform.SetParent(transform);
-          bg.transform.localScale = Vector3.one * (cellSize / spriteSize.x);
-          SpriteRenderer bgSr = bg.AddComponent<SpriteRenderer>();
-          bgSr.sprite = defaultSprite;
-          bgSr.color = Color.black;
-          bgSr.sortingOrder = -5; // Render in back
-                                  // BoxCollider collider = bg.AddComponent<BoxCollider>();
+                // background for borders
+                GameObject bg = new GameObject($"BG_{x}_{y}");
+                bg.transform.position = node.worldPos;
+                bg.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                bg.transform.SetParent(transform);
+                bg.transform.localScale = Vector3.one * (cellSize / spriteSize.x);
+                SpriteRenderer bgSr = bg.AddComponent<SpriteRenderer>();
+                bgSr.sprite = defaultSprite;
+                bgSr.color = Color.black;
+                bgSr.sortingOrder = -5; // Render in back
+                                        // BoxCollider collider = bg.AddComponent<BoxCollider>();
 
-          GameObject go = new GameObject($"Node_{x}_{y}");
-          go.transform.position = node.worldPos;
-          go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-          go.transform.SetParent(transform);
-          go.transform.localScale = Vector3.one * (cellSize / spriteSize.x * 0.9f);
-          SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-          sr.sprite = defaultSprite;
-          sr.color = GetTerrainColor(node.terrain);
-          sr.sortingOrder = bgSr.sortingOrder + 1;
+                GameObject go = new GameObject($"Node_{x}_{y}");
+                go.transform.position = node.worldPos;
+                go.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                go.transform.SetParent(transform);
+                go.transform.localScale = Vector3.one * (cellSize / spriteSize.x * 0.9f);
+                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+                sr.sprite = defaultSprite;
+                sr.color = GetTerrainColor(node.terrain);
+                sr.sortingOrder = bgSr.sortingOrder + 1;
 
 
 
-          node.bgVisual = bg;
-          node.visual = go;
-          grid[x, y] = node;
+                node.bgVisual = bg;
+                node.visual = go;
+                grid[x, y] = node;
+            }
         }
-  }
-
-  private static void BakeNavMesh(float gridWidth, float gridHeight)
-  {
-    NavMeshSurface navMesh = FindFirstObjectByType<NavMeshSurface>(); // Should be ParthCube
-    if (navMesh != null)
-    {
-      navMesh.transform.localScale = new Vector3(gridWidth, 0.0f, gridHeight);
-      navMesh.BuildNavMesh();
     }
-  }
 
-  void Update()
+    private static void BakeNavMesh(float gridWidth, float gridHeight)
+    {
+        NavMeshSurface navMesh = FindFirstObjectByType<NavMeshSurface>(); // Should be ParthCube
+        if (navMesh != null)
+        {
+            navMesh.transform.localScale = new Vector3(gridWidth, 0.0f, gridHeight);
+            navMesh.BuildNavMesh();
+        }
+    }
+
+    void Update()
     {
         // DEBUG - cost label
         if (prevShowSpreadCost != showSpreadCost)
@@ -191,6 +193,17 @@ public class GridManager : MonoBehaviour
         {
             ToggleVisibility();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftBracket)) // [
+        {
+            currentNewsIndex = Mathf.Max(0, currentNewsIndex - 1);
+            RefreshNewsIcons();
+        }
+        if (Input.GetKeyDown(KeyCode.RightBracket)) // ]
+        {
+            currentNewsIndex = Mathf.Min(newsList.Count - 1, currentNewsIndex + 1);
+            RefreshNewsIcons();
+        }
     }
 
     void OnTurnAdvanced()
@@ -199,8 +212,10 @@ public class GridManager : MonoBehaviour
         {
             List<GridNode> newlyReached = news.Spread(currentTurn, grid, width, height);
             foreach (var node in newlyReached)
-                SpawnNewsIcon(node, news.GetColor());
+                node.newsColors.Add(news.GetColor());
         }
+
+        RefreshNewsIcons(); // do this every turn
     }
 
     void TryPlantGivenNews(int x, int y, News news)
@@ -215,7 +230,10 @@ public class GridManager : MonoBehaviour
 
         news.Plant(node);
         newsList.Add(news);
-        SpawnNewsIcon(node, news.GetColor());
+        //SpawnNewsIcon(node, news.GetColor());
+        node.newsColors.Add(news.GetColor());
+
+        RefreshNewsIcons();
     }
 
     void TryPlantNews(int x, int y)
@@ -231,7 +249,11 @@ public class GridManager : MonoBehaviour
         News news = new News();
         news.Plant(node);
         newsList.Add(news);
-        SpawnNewsIcon(node, news.GetColor());
+        //SpawnNewsIcon(node, news.GetColor());
+        node.newsColors.Add(news.GetColor());
+
+        currentNewsIndex = newsList.Count - 1;
+        RefreshNewsIcons();
     }
 
     public void PlantGivenNewsAtWorldPosition(Vector3 worldPos, News news)
@@ -277,7 +299,6 @@ public class GridManager : MonoBehaviour
 
     void RefreshNewsIcons()
     {
-        // 기존 아이콘 전부 제거
         foreach (var icon in newsIcons)
             Destroy(icon);
         newsIcons.Clear();
@@ -285,20 +306,18 @@ public class GridManager : MonoBehaviour
         totalNewsCount = newsList.Count;
         if (newsList.Count == 0) return;
 
-        // currentNewsIndex 범위 보정
         currentNewsIndex = Mathf.Clamp(currentNewsIndex, 0, newsList.Count - 1);
-
         News targetNews = newsList[currentNewsIndex];
+        Color color = targetNews.GetColor();
 
-        // 해당 뉴스가 퍼진 셀들만 아이콘 표시
+        //Debug.Log($"[Refresh] index={currentNewsIndex}, color={color}, newsList={newsList.Count}");
+
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
                 GridNode node = grid[x, y];
-                if (node.newsColors.Count <= currentNewsIndex) continue;
 
-                // 이 노드에 currentNewsIndex번 뉴스 색상이 있는지 확인
-                Color color = targetNews.GetColor();
+
                 if (!node.newsColors.Contains(color)) continue;
 
                 GameObject icon = new GameObject($"NewsIcon_{x}_{y}");
@@ -436,5 +455,8 @@ public class GridManager : MonoBehaviour
                 grid[x, y].visual.GetComponent<SpriteRenderer>().enabled = isVisible;
                 grid[x, y].bgVisual.GetComponent<SpriteRenderer>().enabled = isVisible;
             }
+
+        foreach (var icon in newsIcons)
+            icon.GetComponent<SpriteRenderer>().enabled = isVisible;
     }
 }
