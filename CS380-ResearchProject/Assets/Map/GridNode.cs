@@ -14,6 +14,8 @@ public class GridNode
     public TerrainType terrain;
     public Vector3 worldPos;
     public GameObject visual;
+    public GameObject bgVisual;
+
     public int spreadCost = 1;
     public List<Color> newsColors = new List<Color>();
     

@@ -12,6 +12,10 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int height = 10;
     [SerializeField] private float cellSize = 1f;
 
+    [Header("News Display")] // which news to display?
+    [SerializeField, Range(0, 100)] private int currentNewsIndex = 0;
+    [SerializeField] private int totalNewsCount = 0;
+
     [Header("Terrain Sprites")]
     [SerializeField] private Sprite defaultSprite;
 
@@ -45,6 +49,7 @@ public class GridManager : MonoBehaviour
     private int currentTurn = 0;
     private float timer = 0f;
     private List<News> newsList = new List<News>();
+    private bool isVisible = true;
 
     public Vector2 MapWorldSize => new Vector2(width * cellSize, height * cellSize);
 
@@ -116,7 +121,7 @@ public class GridManager : MonoBehaviour
 
 
 
-
+          node.bgVisual = bg;
           node.visual = go;
           grid[x, y] = node;
         }
@@ -180,6 +185,12 @@ public class GridManager : MonoBehaviour
             worldPos.y = 0f;
             Vector2Int gridPos = WorldToGrid(worldPos);
             TryPlantNews(gridPos.x, gridPos.y);
+        }
+
+        // TEST for visibility
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ToggleVisibility();
         }
     }
 
@@ -263,6 +274,46 @@ public class GridManager : MonoBehaviour
         sr.sortingOrder = 3;
 
         newsIcons.Add(icon);
+    }
+
+    void RefreshNewsIcons()
+    {
+        // 기존 아이콘 전부 제거
+        foreach (var icon in newsIcons)
+            Destroy(icon);
+        newsIcons.Clear();
+
+        totalNewsCount = newsList.Count;
+        if (newsList.Count == 0) return;
+
+        // currentNewsIndex 범위 보정
+        currentNewsIndex = Mathf.Clamp(currentNewsIndex, 0, newsList.Count - 1);
+
+        News targetNews = newsList[currentNewsIndex];
+
+        // 해당 뉴스가 퍼진 셀들만 아이콘 표시
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                GridNode node = grid[x, y];
+                if (node.newsColors.Count <= currentNewsIndex) continue;
+
+                // 이 노드에 currentNewsIndex번 뉴스 색상이 있는지 확인
+                Color color = targetNews.GetColor();
+                if (!node.newsColors.Contains(color)) continue;
+
+                GameObject icon = new GameObject($"NewsIcon_{x}_{y}");
+                icon.transform.position = node.worldPos + new Vector3(0f, 0.5f, 0f);
+                icon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                icon.transform.localScale = Vector3.one * (cellSize * 0.5f / defaultSprite.bounds.size.x);
+
+                SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
+                sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
+                sr.color = color;
+                sr.sortingOrder = 3;
+
+                newsIcons.Add(icon);
+            }
     }
 
     void UpdateCostLabels()
@@ -374,5 +425,17 @@ public class GridManager : MonoBehaviour
             grid[width - 1, height - 1].worldPos
         );
         return Vector3.Distance(a.worldPos, b.worldPos) / maxDistance;
+    }
+
+    public void ToggleVisibility()
+    {
+        isVisible = !isVisible;
+
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+            {
+                grid[x, y].visual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                grid[x, y].bgVisual.GetComponent<SpriteRenderer>().enabled = isVisible;
+            }
     }
 }
