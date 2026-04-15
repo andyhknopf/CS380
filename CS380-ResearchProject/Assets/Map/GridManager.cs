@@ -475,7 +475,10 @@ public class GridManager : MonoBehaviour
     // Save as JSON
     private string SavePath()
     {
-        return Path.Combine(Application.persistentDataPath, $"map_{gameObject.name}.json");
+        string dir = Path.Combine(Application.dataPath, "Data");
+        Directory.CreateDirectory(dir); // if theres no /Data
+
+        return Path.Combine(dir, $"map_{gameObject.name}.json");
     }
 
     public void SaveMap()
