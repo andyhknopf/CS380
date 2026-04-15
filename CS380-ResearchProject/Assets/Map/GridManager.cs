@@ -313,6 +313,7 @@ public class GridManager : MonoBehaviour
         //Debug.Log($"[Refresh] index={currentNewsIndex}, color={color}, newsList={newsList.Count}");
 
         for (int x = 0; x < width; x++)
+        {
             for (int y = 0; y < height; y++)
             {
                 GridNode node = grid[x, y];
@@ -332,6 +333,11 @@ public class GridManager : MonoBehaviour
 
                 newsIcons.Add(icon);
             }
+        }
+
+        // ToggleVisibility() +
+        foreach (var icon in newsIcons)
+            icon.GetComponent<SpriteRenderer>().enabled = isVisible;
     }
 
     void UpdateCostLabels()
