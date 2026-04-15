@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class DialogueOptionBox : MonoBehaviour
 {
-  public GridLayoutGroup contentContainer; // The parent object of the new options for formatting
+  public ContentSizeFitter contentContainer; // The parent object of the new options for formatting
 
   private void Awake()
   {
@@ -28,8 +28,7 @@ public class DialogueOptionBox : MonoBehaviour
   {
     if (contentContainer == null)
     {
-      Debug.LogWarning("You forgot to assign the contentContainer in the inspector!");
-      contentContainer = GetComponentInChildren<GridLayoutGroup>();
+      contentContainer = GetComponentInChildren<ContentSizeFitter>();
     }
   }
 

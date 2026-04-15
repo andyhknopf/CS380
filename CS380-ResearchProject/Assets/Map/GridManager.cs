@@ -7,10 +7,10 @@ using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    [SerializeField] private int width = 10;
-    [SerializeField] private int height = 10;
-    [SerializeField] private float cellSize = 1f;
+  [Header("Grid Settings")]
+  [SerializeField] private int width = 10;
+  [SerializeField] private int height = 10;
+  [SerializeField] private float cellSize = 1f;
 
     [Header("News Display")] // which news to display?
     [SerializeField, Range(0, 100)] private int currentNewsIndex = 0;
@@ -19,28 +19,28 @@ public class GridManager : MonoBehaviour
     [Header("Terrain Sprites")]
     [SerializeField] private Sprite defaultSprite;
 
-    [Header("Terrain Colors")]
-    [SerializeField] private Color fieldColor = Color.green;
-    [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
-    [SerializeField] private Color mountainColor = Color.gray;
+  [Header("Terrain Colors")]
+  [SerializeField] private Color fieldColor = Color.green;
+  [SerializeField] private Color forestColor = new Color(0f, 0.5f, 0f);
+  [SerializeField] private Color mountainColor = Color.gray;
 
-    [Header("Terrain Data")]
-    [SerializeField] private TerrainData[] terrainDataList;
+  [Header("Terrain Data")]
+  [SerializeField] private TerrainData[] terrainDataList;
 
-    [Header("Edit Settings")]
-    [SerializeField] private TerrainType selectedTerrain = TerrainType.FIELD;
+  [Header("Edit Settings")]
+  [SerializeField] private TerrainType selectedTerrain = TerrainType.FIELD;
 
-    [Header("Debug")]
-    [SerializeField] private bool showSpreadCost = false;
-    private bool prevShowSpreadCost;
+  [Header("Debug")]
+  [SerializeField] private bool showSpreadCost = false;
+  private bool prevShowSpreadCost;
 
-    [Header("Turn Settings")]
-    [SerializeField] private float turnSpeed = 1f;
-    [SerializeField] private bool isTurnPaused = true;
+  [Header("Turn Settings")]
+  [SerializeField] private float turnSpeed = 1f;
+  [SerializeField] private bool isTurnPaused = true;
 
-    [Header("News Icon")]
-    [SerializeField] private Sprite newsSprite;
-    [SerializeField] private Color newsColor = Color.yellow;
+  [Header("News Icon")]
+  [SerializeField] private Sprite newsSprite;
+  [SerializeField] private Color newsColor = Color.yellow;
 
     private GridNode[,] grid;
     private Vector3 origin;
@@ -54,12 +54,11 @@ public class GridManager : MonoBehaviour
     public Vector2 MapWorldSize => new Vector2(width * cellSize, height * cellSize);
 
 
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-
-        GenerateGrid();
-    }
+  void Start()
+  {
+    GenerateGrid();
+    DontDestroyOnLoad(gameObject);
+  }
 
     void GenerateGrid()
     {

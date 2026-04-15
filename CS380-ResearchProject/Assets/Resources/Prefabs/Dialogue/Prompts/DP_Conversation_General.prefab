@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6416664264581574533}
   - component: {fileID: 1522269313090010956}
   m_Layer: 0
-  m_Name: DP_WhyDoingBad
+  m_Name: DP_Conversation_General
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,9 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialoguePrompt
   responses:
-  - {fileID: 2048025522786806102, guid: 3a317fd360f63c34e94db97db3927ac2, type: 3}
-  - {fileID: 2048025522786806102, guid: 7173e24041432c441ad35209386bf5fe, type: 3}
-  - {fileID: 2048025522786806102, guid: b7e3999795bce0a488fb89f4a6978879, type: 3}
+  - {fileID: 2048025522786806102, guid: 774ac83ed191c8e4a863bff6cf85f9e5, type: 3}
+  - {fileID: 820303046669048158, guid: b2ceee198ff2e394c9fad71a716a6140, type: 3}
   dialogueLines:
-  - Oh no that's terrible!
-  - What's got you down?
+  - What do you want to talk about?

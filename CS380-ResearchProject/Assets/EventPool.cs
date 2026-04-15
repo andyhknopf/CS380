@@ -1,11 +1,11 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class City : MonoBehaviour
+public class EventPool : MonoBehaviour
 {
-  public string citySceneName;
-  public GridNode location;
+  public List<News> possibleNewsEvents = new List<News>();
 
-  public int dummyDataForCity;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {

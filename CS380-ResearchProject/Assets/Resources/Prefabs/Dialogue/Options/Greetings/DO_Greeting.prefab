@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8840366618523861952}
   - component: {fileID: -5145714083709194898}
   m_Layer: 5
-  m_Name: DO_Greeting_Negative
+  m_Name: DO_Greeting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,10 +35,10 @@ RectTransform:
   - {fileID: 3520987302459888275}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4563515838206773284
 CanvasRenderer:
@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueOption
   _nextPrompt: {fileID: 4449452636545292766, guid: f9e491d92a13c854c81d7117467440e1, type: 3}
+  text: 
 --- !u!1 &2046694718571962452
 GameObject:
   m_ObjectHideFlags: 0

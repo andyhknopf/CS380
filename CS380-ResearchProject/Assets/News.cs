@@ -2,28 +2,47 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine; // color
 
+[System.Serializable]
 public class News
 {
     UnityEngine.Color color;
-    public List<GridNode> reached = new List<GridNode>();
+    [HideInInspector]public List<GridNode> reached = new List<GridNode>();
     private Queue<(GridNode node, int spreadAtTurn)> pending = new Queue<(GridNode, int)>();
+    public Subject subject;
+    public NewsAction action;
+    [HideInInspector] public string newsString;
+
+
+    [SerializeField]
+    public OpinionInfluencer influencer;
+    public enum OpinionInfluencer : int
+    {
+      DISTANCE_FROM_SUBJECT = 0,
+      LOYALTY_TO_KING = 1,
+      LATTITUDE = 2,
+    }
+
 
     public News(UnityEngine.Color color)
     {
-        this.color = color;
+      newsString = subject.name + " " + action.text;
+      this.color = color;
     }
 
     public News()
     {
-
+      newsString = subject.name + " " + action.text;
     }
 
-    public News(News other)
-    {
-        this.color = other.color;
-        this.reached = other.reached;
-        this.pending = other.pending;
-    }
+  public News(News other)
+  {
+    color = other.color;
+    reached = other.reached;
+    pending = other.pending;
+    subject = other.subject;
+    action = other.action;
+    newsString = other.newsString;
+  }
 
     public UnityEngine.Color GetColor()
     {
@@ -32,6 +51,8 @@ public class News
 
     public void Plant(GridNode origin)
     {
+        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+
         reached.Add(origin);
         pending.Enqueue((origin, origin.spreadCost));
         this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);

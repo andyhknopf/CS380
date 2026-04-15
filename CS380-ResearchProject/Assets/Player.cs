@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Interact with " + target.name);
 
                 if (target.tag == "NPC")
-                    DialogueManager.Instance.StartConversation(target.GetComponentInChildren<DialoguePrompt>().gameObject);
+                    DialogueManager.Instance.StartConversation(target.GetComponentInChildren<DialoguePrompt>().gameObject, target.GetComponent<NPCBrain>());
                 else if (target.tag == "City")
                     EnterCity(target);
 

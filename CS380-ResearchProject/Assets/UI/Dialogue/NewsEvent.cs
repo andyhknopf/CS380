@@ -1,11 +1,10 @@
 using UnityEngine;
 
-public class City : MonoBehaviour
+public class NewsEvent : MonoBehaviour
 {
-  public string citySceneName;
-  public GridNode location;
+  public Subject subject;
+  public NewsAction action;
 
-  public int dummyDataForCity;
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
