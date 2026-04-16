@@ -450,7 +450,7 @@ public class GridManager : MonoBehaviour
         return result;
     }
 
-    Vector2Int WorldToGrid(Vector3 worldPos)
+    public Vector2Int WorldToGrid(Vector3 worldPos)
     {
         int x = Mathf.RoundToInt((worldPos.x - origin.x) / cellSize);
         int y = Mathf.RoundToInt((worldPos.z - origin.z) / cellSize);

@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
 
         SceneManager.LoadScene(cityScript.citySceneName);
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public GameObject GetClosestTarget()

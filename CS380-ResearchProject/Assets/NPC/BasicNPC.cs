@@ -1,4 +1,5 @@
 // using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,17 +10,24 @@ public class BasicNPC : MonoBehaviour
     public Vector2 TTM_Range;
     public Vector2 Travel_Range;
 
-    public GameObject city;
+    public City city;
     Vector3 initialPos;
     public float Radius;
 
     const int MAX_LOOPS = 10000;
     NavMeshAgent _agent;
 
-  private void Awake()
-  {
-    _agent = GetComponent<NavMeshAgent>();
-  }
+    public List<News> newsList;
+
+    private MeshRenderer mr;
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        newsList = GetComponent<NPCBrain>().knownNewsList;
+        mr = GetComponent<MeshRenderer>();
+        
+    }
   void Start()
     {
       if (city == null) initialPos = transform.position;
@@ -36,6 +44,8 @@ public class BasicNPC : MonoBehaviour
           Travel_Range = new Vector2(4.0f, 6.0f);
 
       if (Radius == 0) Radius = 8.0f;
+
+        //mr.material.color = Color.red;
     }
 
     void Update()
@@ -58,6 +68,53 @@ public class BasicNPC : MonoBehaviour
       _agent.SetDestination(destination);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Player collision");
+            GameObject.Find("GridManager").GetComponent<GridManager>().PlantNewsAtWorldPosition(collision.transform.position);
+
+            //if collision is NPC
+            /*
+             * check npc's news list
+             * if the last most value is different than my last most value, then enter double check
+             * if col newest exists in my news list -> keep color. IF NOT, change mesh color to newest news color
+             * */
+        }
+        if (collision.gameObject.tag == "NPC")
+        {
+            List<News> npcNewsList = collision.transform.GetComponent<NPCBrain>().knownNewsList;
+            if ( npcNewsList.Count == 0) return;
+
+
+            if(npcNewsList[npcNewsList.Count-1] != newsList[newsList.Count - 1])
+            {
+                if (newsList.Contains(npcNewsList[npcNewsList.Count - 1]) == false)    //UNSURE IF NEWSLIST IS PASSED COPY OR REFERENCE, COULD BE ISSUE HERE
+                {
+                    News newNews = npcNewsList[npcNewsList.Count - 1];
+                    //mr.material.color = newNews.GetColor();
+                    //newsList.Add(newNews);
+                    //city.colorMap[newNews.GetColor()] += 1;
+                    LearnNews(newNews);
+
+                }
+            }
+        }
+    }
+
+    public void LearnNews(News news)
+    {
+        mr.material.color = news.GetColor();
+        newsList.Add(news);
+        city.colorMap[news.GetColor()] += 1;
+
+        if(city.colorMap[news.GetColor()] > city.amtKnownMost)
+        {
+            city.newestNews = news.GetColor();
+            city.amtKnownMost = city.colorMap[news.GetColor()];
+        }
+    }
     //IEnumerator MoveNPC()
     //{
     //    float TTM = Random.Range(TTM_Range.x, TTM_Range.y);
