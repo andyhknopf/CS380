@@ -220,7 +220,7 @@ public class GridManager : MonoBehaviour
         {
             List<GridNode> newlyReached = news.Spread(currentTurn, grid, width, height);
             foreach (var node in newlyReached)
-                node.newsIDs.Add(news.GetColor());
+                node.newsIDs.Add(news.GetID());
         }
 
         RefreshNewsIcons(); // do this every turn
@@ -241,7 +241,7 @@ public class GridManager : MonoBehaviour
         news.Plant(node);
         globalNewsList.Add(news);
         //SpawnNewsIcon(node, news.GetColor());
-        node.newsIDs.Add(news.GetColor());
+        node.newsIDs.Add(news.GetID());
 
         RefreshNewsIcons();
     }
@@ -260,7 +260,7 @@ public class GridManager : MonoBehaviour
         news.Plant(node);
         globalNewsList.Add(news);
         //SpawnNewsIcon(node, news.GetColor());
-        node.newsIDs.Add(news.GetColor());
+        node.newsIDs.Add(news.GetID());
 
         currentNewsIndex = globalNewsList.Count - 1;
         RefreshNewsIcons();
@@ -326,7 +326,7 @@ public class GridManager : MonoBehaviour
 
         currentNewsIndex = Mathf.Clamp(currentNewsIndex, 0, globalNewsList.Count - 1);
         News targetNews = globalNewsList[currentNewsIndex];
-        Color color = targetNews.GetColor();
+        Color color = targetNews.GetID();
 
         //Debug.Log($"[Refresh] index={currentNewsIndex}, color={color}, newsList={newsList.Count}");
 
@@ -347,7 +347,7 @@ public class GridManager : MonoBehaviour
                 SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
                 sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
                 sr.color = color;
-                sr.sortingOrder = 3;
+                sr.sortingOrder = 1000;
 
                 newsIcons.Add(icon);
             }
@@ -446,7 +446,7 @@ public class GridManager : MonoBehaviour
         // For each piece of news ID
         foreach (Color color in node.newsIDs)
             foreach (News news in globalNewsList)
-                if (news.GetColor() == color)
+                if (news.GetID() == color)
                     result.Add(news);
 
         return result;

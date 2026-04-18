@@ -9,8 +9,10 @@ public class NPCBrain : MonoBehaviour
   public GridNode gridLocation;
   [HideInInspector] 
   public Dictionary<News, Opinion> opinions = new Dictionary<News, Opinion>();
-  [HideInInspector]
   public List<News> knownNewsList = new List<News>();
+
+  [HideInInspector]
+  public News lastReceivedNews = null;
 
   const int UNINITIALIZED_VALUE = -999;
   public static float _loyaltyToKing = UNINITIALIZED_VALUE; // random value between -1 and 1
@@ -20,6 +22,13 @@ public class NPCBrain : MonoBehaviour
   {
     if (_loyaltyToKing == UNINITIALIZED_VALUE)
       _loyaltyToKing = Random.Range(-1, 2);
+  }
+
+  private void Update()
+  {
+    // Color code the NPC if they have received news
+    if (lastReceivedNews != null)
+      ColorCodeNPC();
   }
 
   public float CalculateOpinionHeuristic(News news)
@@ -62,13 +71,13 @@ public class NPCBrain : MonoBehaviour
       opinionString += news.subject.negativeOpinionStrings[randIndex] + " because ";
       opinionString += GetExplanationOfInfluence((int)opinionValue, news.influencer);
     }
-    else if (opinionValue == 0)
+    else if (opinionValue == 0) // Neutral opinion
     {
       int randIndex = Random.Range(0, news.subject.neutralOpinionStrings.Count);
       opinionString += news.subject.neutralOpinionStrings[randIndex] + " because ";
       opinionString += GetExplanationOfInfluence((int)opinionValue, news.influencer);
     }
-    else if (opinionValue > 0)
+    else if (opinionValue > 0) // Positive opinion
     {
       int randIndex = Random.Range(0, news.subject.positiveOpinionStrings.Count);
       opinionString += news.subject.positiveOpinionStrings[randIndex] + " because ";
@@ -138,6 +147,7 @@ public class NPCBrain : MonoBehaviour
   public void AddToKnownNews(News news)
   {
     knownNewsList.Add(news);
+    lastReceivedNews = news;
   }
 
   public bool NewsAlreadyKnown(News news)
@@ -146,5 +156,12 @@ public class NPCBrain : MonoBehaviour
       return true;
 
     return false;
+  }
+
+  // Color the NPC the same color as the associated piece of last received news
+  public void ColorCodeNPC()
+  { 
+    GetComponent<Renderer>().material.color = lastReceivedNews.GetID();
+
   }
 }

@@ -67,6 +67,8 @@ public class BasicNPC : MonoBehaviour
 
   private void TalkToOtherNPCs()
   {
+    News newNews = null;
+
     NPCBrain[] npcs = FindObjectsByType<NPCBrain>(FindObjectsSortMode.None);
     Debug.Assert(npcs.Length > 1, "There should always be more than 1 basic NPC");
     foreach (NPCBrain npc in npcs)
@@ -77,17 +79,31 @@ public class BasicNPC : MonoBehaviour
 
       // Skip if the other NPC has any news
       List<News> npcNewsList = npc.knownNewsList;
-      if (npcNewsList.Count == 0) return;
+      if (npcNewsList.Count == 0) continue;
+
+      // If I don't know know anything yet
+      if (newsList.Count == 0)
+      {
+        Debug.Log("NewsListCount");
+        newNews = npcNewsList[npcNewsList.Count - 1];
+        CreateNewsLine(npc, newNews);
+        LearnNews(newNews);
+        return;
+      }
 
       // If this piece of news is already known
       if (npcNewsList[npcNewsList.Count - 1] == newsList[newsList.Count - 1])
         continue;
 
-      //UNSURE IF NEWSLIST IS PASSED COPY OR REFERENCE, COULD BE ISSUE HERE
+      // UNSURE IF NEWSLIST IS PASSED COPY OR REFERENCE, COULD BE ISSUE HERE
       if (newsList.Contains(npcNewsList[npcNewsList.Count - 1]) == true)
         continue;
 
-      News newNews = npcNewsList[npcNewsList.Count - 1];
+      Debug.Log("newNewsCreated");
+      newNews = npcNewsList[npcNewsList.Count - 1];
+
+      // Draw a line inbetween them
+      CreateNewsLine(npc, newNews);
 
       //mr.material.color = newNews.GetColor();
       //newsList.Add(newNews);
@@ -96,11 +112,42 @@ public class BasicNPC : MonoBehaviour
     }
   }
 
+  private void CreateNewsLine(NPCBrain npc, News newNews)
+  {
+    // Create a line from the prefab
+    GameObject newsLine = Resources.Load<GameObject>("Prefabs/News/NewsLineRenderer");
+
+    // Create the news line
+    newsLine = Instantiate(newsLine);
+
+    // Set the color to the color of the related news
+    LineRenderer lineRenderer = newsLine.GetComponent<LineRenderer>();
+    Debug.Assert(lineRenderer != null, "Linerenderer should never be null!");
+    lineRenderer.startColor = newNews.GetID();
+    lineRenderer.endColor = newNews.GetID();
+
+
+    // Tell the line the other NPC is sending, we are learning for the first time
+    NewsLineRenderer newsLineRenderer = newsLine.GetComponent<NewsLineRenderer>();
+    newsLineRenderer.sender = npc.gameObject;
+    newsLineRenderer.receiver = gameObject;
+  }
+
   void MoveAgentRandomly()
     {
-      float minDist = 5f;
-      float maxDist = 50f;
-      Vector3 destination = new Vector3(Random.insideUnitCircle.x, 0f, Random.insideUnitCircle.y) * Random.Range(minDist, maxDist);
+      float minDist = 1f;
+      float maxDist = 35f;
+
+      Vector3 destination = Vector3.zero;
+      BasicNPC[] otherNpcs = FindObjectsByType<BasicNPC>(FindObjectsSortMode.None);
+      int randIndex = Random.Range(0, otherNpcs.Length);
+
+      // Walk randomly or to another NPC
+      if (Random.Range(0f, 100f) < 50f)
+        destination = otherNpcs[randIndex].transform.position;
+      else
+        destination = transform.position + new Vector3(Random.insideUnitCircle.x, 0.0f, Random.insideUnitCircle.x) * Random.Range(minDist, maxDist);
+
       _agent.SetDestination(destination);
     }
 
@@ -122,17 +169,18 @@ public class BasicNPC : MonoBehaviour
 
     public void LearnNews(News news)
     {
-        mr.material.color = news.GetColor();
+        GetComponent<NPCBrain>().lastReceivedNews = news;
+        mr.material.color = news.GetID();
         newsList.Add(news);
         //city.newestNews = news.GetColor();
 
         // Add this npc to this list of npcs that know this news
-        city.colorMap[news.GetColor()] += 1;
+        city.colorMap[news.GetID()] += 1;
 
         // Update the most popular piece of known news in this city
-        if(city.colorMap[news.GetColor()] > city.amtKnownMost)
+        if(city.colorMap[news.GetID()] > city.amtKnownMost)
         {
-            city.amtKnownMost = city.colorMap[news.GetColor()];
+            city.amtKnownMost = city.colorMap[news.GetID()];
         }
     }
 

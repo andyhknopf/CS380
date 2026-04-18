@@ -30,7 +30,7 @@ public class City : MonoBehaviour
     // Pass in an ID and get the amount of people that know this piece of news
     public NativeHashMap<Color, int> colorMap;
 
-
+    GameObject spawnPoint;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,22 +41,13 @@ public class City : MonoBehaviour
 
     private void Awake()
     {
-        gm = GameObject.Find("GridManager").GetComponent<GridManager>();
-        Vector2Int gridPos = gm.WorldToGrid(transform.position);
-        gridNode = gm.GetNode(gridPos.x, gridPos.y);
-        cityNewsList.Add(null);
-
-        //spawn npcs in map
-        //assign npcs to 
-        for(int i = 0; i < numNPCs; i++)
-        {
-            //GameObject npcPrefab = Resources.Load("NPCs/AndyNPC") as GameObject;
-            GameObject npcPrefab = Instantiate(Resources.Load("Prefabs/NPCs/AndyNPC", typeof(GameObject))) as GameObject;
-            Instantiate(npcPrefab, new Vector3(Random.Range(0, gm.MapWorldSize.x), transform.position.y + 3.0f, Random.Range(0, gm.MapWorldSize.y)), Quaternion.identity);
-            NPCs.Add(npcPrefab);
-        }
+      // Check the NPCs
 
 
+      gm = GameObject.Find("GridManager").GetComponent<GridManager>();
+      Vector2Int gridPos = gm.WorldToGrid(transform.position);
+      gridNode = gm.GetNode(gridPos.x, gridPos.y);
+      cityNewsList.Add(null);
     }
 
     // Update is called once per frame
@@ -96,7 +87,7 @@ public class City : MonoBehaviour
       for (int i = 0; i < compare.Count - 1; ++i)
       {
         // Skip this piece of news if we already know it
-        if (compare[i].GetColor() == alreadyKnownNews.GetColor())
+        if (compare[i].GetID() == alreadyKnownNews.GetID())
           continue;
 
         receivedNews.Add(alreadyKnownNews);
@@ -118,7 +109,7 @@ public class City : MonoBehaviour
             NPCs[i].GetComponent<BasicNPC>().LearnNews(news);
         }
 
-        colorMap.Add(news.GetColor(), numToKnow);
+        colorMap.Add(news.GetID(), numToKnow);
 
     }
 }

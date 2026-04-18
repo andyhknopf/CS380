@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ParthSandbox.unity
     guid: 93ad07c12d614e244b23017f26ee404f
   - enabled: 1
-    path: Assets/Scenes/LittleCity.unity
+    path: Assets/Scenes/LittleCity1.unity
     guid: 462ac546250fc674989a63c0cb7a943c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -5,10 +5,12 @@ using UnityEngine; // color
 [System.Serializable]
 public class News
 {
-    UnityEngine.Color color;
-    [HideInInspector]public List<GridNode> reached = new List<GridNode>();
+    [SerializeField] UnityEngine.Color id;
     public Subject subject;
     public NewsAction action;
+
+
+    [HideInInspector]public List<GridNode> reached = new List<GridNode>();
     [HideInInspector] public string newsString;
     [SerializeField] public int speed = 1;
 
@@ -23,12 +25,10 @@ public class News
         LATTITUDE = 2,
     }
 
-
-
     public News(UnityEngine.Color color)
     {
         newsString = subject.name + " " + action.text;
-        this.color = color;
+        this.id = color;
     }
 
     public News()
@@ -38,7 +38,7 @@ public class News
 
     public News(News other)
     {
-        color = other.color;
+        id = other.id;
         reached = other.reached;
         pending = other.pending;
         subject = other.subject;
@@ -47,14 +47,14 @@ public class News
         speed = other.speed;
     }
 
-    public UnityEngine.Color GetColor()
+    public UnityEngine.Color GetID()
     {
-        return this.color;
+        return this.id;
     }
 
     public void Plant(GridNode origin)
     {
-        this.color = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+        this.id = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 
         reached.Add(origin);
         int initialDelay = speed * origin.spreadCost;
