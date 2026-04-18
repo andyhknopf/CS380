@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 112947530}
   - component: {fileID: 112947529}
   - component: {fileID: 112947533}
+  - component: {fileID: 112947534}
   m_Layer: 0
   m_Name: ParthCube
   m_TagString: Untagged
@@ -198,7 +199,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112947527}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -293,8 +294,20 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 1b1b58145008e0048bc1232c699d2274, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: e8730b6805cdb6e4ab258255936cb2f8, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &112947534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112947527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68d7524f3def48409674b0203829c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NavMeshBaker
 --- !u!1 &195096881
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,9 +806,33 @@ MonoBehaviour:
     visual: {fileID: 0}
     bgVisual: {fileID: 0}
     spreadCost: 1
-    newsColors: []
+    newsIDs: []
     leftCount: 1
   knownNewsList: []
+  lastReceivedNews:
+    id: {r: 0, g: 0, b: 0, a: 0}
+    subject:
+      name: 
+      gridLocation:
+        x: 0
+        y: 0
+        terrain: 0
+        worldPos: {x: 0, y: 0, z: 0}
+        visual: {fileID: 0}
+        bgVisual: {fileID: 0}
+        spreadCost: 1
+        newsIDs: []
+        leftCount: 1
+      positiveOpinionStrings: []
+      neutralOpinionStrings: []
+      negativeOpinionStrings: []
+    action:
+      name: 
+      text: 
+    reached: []
+    newsString: 
+    speed: 1
+    influencer: 0
 --- !u!195 &313591838
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -860,7 +897,7 @@ MonoBehaviour:
   TTM_Range: {x: 0, y: 0}
   Travel_Range: {x: 0, y: 0}
   city: {fileID: 0}
-  Radius: 12
+  knowledgeRadius: 3
   newsList: []
 --- !u!136 &313591841
 CapsuleCollider:
@@ -1379,9 +1416,33 @@ MonoBehaviour:
     visual: {fileID: 0}
     bgVisual: {fileID: 0}
     spreadCost: 1
-    newsColors: []
+    newsIDs: []
     leftCount: 1
   knownNewsList: []
+  lastReceivedNews:
+    id: {r: 0, g: 0, b: 0, a: 0}
+    subject:
+      name: 
+      gridLocation:
+        x: 0
+        y: 0
+        terrain: 0
+        worldPos: {x: 0, y: 0, z: 0}
+        visual: {fileID: 0}
+        bgVisual: {fileID: 0}
+        spreadCost: 1
+        newsIDs: []
+        leftCount: 1
+      positiveOpinionStrings: []
+      neutralOpinionStrings: []
+      negativeOpinionStrings: []
+    action:
+      name: 
+      text: 
+    reached: []
+    newsString: 
+    speed: 1
+    influencer: 0
 --- !u!195 &614916851
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1446,7 +1507,7 @@ MonoBehaviour:
   TTM_Range: {x: 0, y: 0}
   Travel_Range: {x: 0, y: 0}
   city: {fileID: 0}
-  Radius: 12
+  knowledgeRadius: 3
   newsList: []
 --- !u!136 &614916854
 CapsuleCollider:
@@ -1699,7 +1760,7 @@ MonoBehaviour:
   TTM_Range: {x: 0, y: 0}
   Travel_Range: {x: 0, y: 0}
   city: {fileID: 0}
-  Radius: 12
+  knowledgeRadius: 0
   newsList: []
 --- !u!136 &798061628
 CapsuleCollider:
@@ -2892,74 +2953,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 794193417371340809, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 794193417371340809, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 794193417371340809, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1357142784116873749, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1357142784116873749, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.b
-      value: 0.401
-      objectReference: {fileID: 0}
-    - target: {fileID: 1357142784116873749, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.g
-      value: 0.401
-      objectReference: {fileID: 0}
-    - target: {fileID: 1357142784116873749, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.r
-      value: 0.401
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123070571232777309, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2123070571232777309, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149507224129022555, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149507224129022555, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.b
-      value: 0.288
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149507224129022555, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.g
-      value: 0.288
-      objectReference: {fileID: 0}
-    - target: {fileID: 2149507224129022555, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Color.r
-      value: 0.288
-      objectReference: {fileID: 0}
-    - target: {fileID: 2774188114044947472, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3030234092091263521, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3030234092091263521, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_PlaneDistance
-      value: 0.81
-      objectReference: {fileID: 0}
-    - target: {fileID: 3814652211087443236, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5639059665402278295, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
       propertyPath: m_Name
       value: DialogueSystem
@@ -3004,14 +2997,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8527141076779823580, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.003796028
-      objectReference: {fileID: 0}
-    - target: {fileID: 8527141076779823580, guid: 90c3ccd86e6fcaa45b1d55199d5e4663, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.00024085314
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3054,7 +3039,7 @@ MonoBehaviour:
   TTM_Range: {x: 0, y: 0}
   Travel_Range: {x: 0, y: 0}
   city: {fileID: 0}
-  Radius: 12
+  knowledgeRadius: 0
   newsList: []
 --- !u!136 &1485450220
 CapsuleCollider:
@@ -3322,7 +3307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::City
   citySceneName: LittleCity
-  location:
+  gridNode:
     x: 0
     y: 0
     terrain: 0
@@ -3330,9 +3315,16 @@ MonoBehaviour:
     visual: {fileID: 0}
     bgVisual: {fileID: 0}
     spreadCost: 1
-    newsColors: []
+    newsIDs: []
     leftCount: 1
   dummyDataForCity: 0
+  cityNewsList: []
+  receivedNews: []
+  sentNews: []
+  numNPCs: 3
+  NPCs: []
+  newestNews: {r: 0, g: 0, b: 0, a: 0}
+  amtKnownMost: 0
 --- !u!4 &1704335920
 Transform:
   m_ObjectHideFlags: 0

@@ -305,9 +305,9 @@ MonoBehaviour:
       - I feel so good about it
       - I like it a lot
       neutralOpinionStrings:
-      - I don't really care about that
-      - Meh that doesn't really matter
-      - '*Yawn* that stuff bores me'
+      - I'm indifferent
+      - I don't know about politics
+      - I don't do politics
       negativeOpinionStrings:
       - I am fuming about that
       - That really is the worst

@@ -287,15 +287,7 @@ MonoBehaviour:
   text: 'Did you hear about the *king* getting overthrown? '
   isNewsOption: 1
   news:
-    reached:
-    - x: 0
-      y: 0
-      terrain: 0
-      worldPos: {x: 0, y: 0, z: 0}
-      visual: {fileID: 0}
-      spreadCost: 0
-      newsColors: []
-      leftCount: 0
+    id: {r: 1, g: 0, b: 0.34124088, a: 1}
     subject:
       name: the King
       gridLocation:
@@ -304,17 +296,18 @@ MonoBehaviour:
         terrain: 0
         worldPos: {x: 0, y: 0, z: 0}
         visual: {fileID: 0}
+        bgVisual: {fileID: 0}
         spreadCost: 0
-        newsColors: []
+        newsIDs: []
         leftCount: 0
       positiveOpinionStrings:
       - I've waiting my whole life to hear this
       - I feel so good about it
       - I like it a lot
       neutralOpinionStrings:
-      - I don't really care about that
-      - Meh that doesn't really matter
-      - '*Yawn* that stuff bores me'
+      - I'm indifferent
+      - I don't know about politics
+      - I don't do politics
       negativeOpinionStrings:
       - I am fuming about that
       - That really is the worst
@@ -322,5 +315,16 @@ MonoBehaviour:
     action:
       name: KingOverthrown
       text: was overthrown
+    reached:
+    - x: 0
+      y: 0
+      terrain: 0
+      worldPos: {x: 0, y: 0, z: 0}
+      visual: {fileID: 0}
+      bgVisual: {fileID: 0}
+      spreadCost: 0
+      newsIDs: []
+      leftCount: 0
     newsString: 
+    speed: 1
     influencer: 1

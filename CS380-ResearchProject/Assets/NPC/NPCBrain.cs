@@ -152,8 +152,12 @@ public class NPCBrain : MonoBehaviour
 
   public bool NewsAlreadyKnown(News news)
   {
-    if (knownNewsList.Contains(news))
-      return true;
+    foreach (var item in knownNewsList)
+    {
+      if (news.GetID() == item.GetID())
+        return true;
+    }
+    
 
     return false;
   }

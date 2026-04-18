@@ -284,26 +284,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueOption
   _nextPrompt: {fileID: 4449452636545292766, guid: 6239f44274b0d794383567e1031687e6, type: 3}
-  text: What do you think about the cold weather?
+  text: What do you think about Town A having cold weather?
   isNewsOption: 1
   news:
-    reached: []
+    id: {r: 0, g: 0, b: 1, a: 1}
     subject:
-      name: 
+      name: Town A
       gridLocation:
         x: 0
         y: 0
         terrain: 0
         worldPos: {x: 0, y: 0, z: 0}
         visual: {fileID: 0}
+        bgVisual: {fileID: 0}
         spreadCost: 1
-        newsColors: []
+        newsIDs: []
         leftCount: 1
-      positiveOpinionStrings: []
-      neutralOpinionStrings: []
-      negativeOpinionStrings: []
+      positiveOpinionStrings:
+      - It's absolutely perfect
+      - I think it's quite nice
+      - I'm as happy as can be
+      neutralOpinionStrings:
+      - It feels normal to me
+      - It's fine I guess
+      - I don't notice it
+      negativeOpinionStrings:
+      - I absolutely hate it
+      - I'd like to get out of here
+      - It's horrible
     action:
-      name: 
-      text: 
+      name: HasColdWeather
+      text: has cold weather right now
+    reached: []
     newsString: 
-    influencer: 0
+    speed: 1
+    influencer: 2

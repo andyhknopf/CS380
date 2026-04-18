@@ -136,7 +136,7 @@ public class BasicNPC : MonoBehaviour
   void MoveAgentRandomly()
     {
       float minDist = 1f;
-      float maxDist = 35f;
+      float maxDist = 12f;
 
       Vector3 destination = Vector3.zero;
       BasicNPC[] otherNpcs = FindObjectsByType<BasicNPC>(FindObjectsSortMode.None);

@@ -53,7 +53,7 @@ public class NewsReaction : MonoBehaviour
     promptString += _npcBrain.SetOpinionString(news, opinion);
 
     // Explanation
-    promptString += _npcBrain.GetExplanationOfInfluence((int)opinion, news.influencer);
+    // promptString += _npcBrain.GetExplanationOfInfluence((int)opinion, news.influencer);
 
     // Add the whole string
     _parentPrompt.dialogueLines.Add(promptString);

@@ -2335,6 +2335,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: mountainColor.b
+      value: 0.16023396
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: mountainColor.g
+      value: 0.15384905
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
+      propertyPath: mountainColor.r
+      value: 0.16981131
+      objectReference: {fileID: 0}
+    - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
       propertyPath: terrainDataList.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2958,6 +2970,10 @@ PrefabInstance:
     - target: {fileID: 8485841038869134957, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: numNPCs
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485841038869134957, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: citySceneName
+      value: LittleCity1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
