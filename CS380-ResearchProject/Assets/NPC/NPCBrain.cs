@@ -148,6 +148,11 @@ public class NPCBrain : MonoBehaviour
   {
     knownNewsList.Add(news);
     lastReceivedNews = news;
+
+
+    CityInner cityInner = FindFirstObjectByType<CityInner>();
+    Debug.Assert(cityInner != null, "This should never be null!");
+    cityInner.OnNPCLearnedNews(news);
   }
 
   public bool NewsAlreadyKnown(News news)
