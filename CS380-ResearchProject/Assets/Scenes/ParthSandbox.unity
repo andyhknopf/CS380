@@ -2473,7 +2473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity1
-  spreadSpeed: 5
+  spreadSpeed: 20
 --- !u!4 &1427615469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6491707645126646458, guid: a70ad05711a88d04f968a72b48a9c7f1, type: 3}
