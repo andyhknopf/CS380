@@ -66,6 +66,8 @@ public class Player : MonoBehaviour
                     DialogueManager.Instance.StartConversation(target.GetComponentInChildren<DialoguePrompt>().gameObject, target.GetComponent<NPCBrain>());
                 else if (target.tag == "City")
                     EnterCity(target);
+                else if (target.tag == "BackCity")
+                    EnterHomeCity(target);
 
             }
 
@@ -77,10 +79,18 @@ public class Player : MonoBehaviour
 
     private void EnterCity(GameObject target)
     {
-        City cityScript = target.GetComponent<City>();
+        CityNewsListener cityScript = target.GetComponent<CityNewsListener>();
         Debug.Assert(cityScript != null, "City script doesnt exist");
 
         SceneManager.LoadScene(cityScript.citySceneName);
+    }
+    private void EnterHomeCity(GameObject target)
+    {
+        gridManager.ShowGrid();
+        CityInner cityScript = target.GetComponent<CityInner>();
+        Debug.Assert(cityScript != null, "CityInner script doesnt exist");
+
+        SceneManager.LoadScene(cityScript.cityHomeSceneName);
 
         //throw new NotImplementedException();
     }

@@ -90,7 +90,8 @@ public class City : MonoBehaviour
         if (compare[i].GetID() == alreadyKnownNews.GetID())
           continue;
 
-        receivedNews.Add(alreadyKnownNews);
+        receivedNews.Add(compare[i]);
+        StartSpeadingNews(compare[i]);
         return;
       }
     }
@@ -101,7 +102,7 @@ public class City : MonoBehaviour
         //add news to a bunch of npcs in the list
         if (cityNewsList.Contains(news)) return;
 
-        int numToKnow = Random.Range(1, NPCs.Count / 2);
+        int numToKnow = Random.Range(1, 2* (NPCs.Count / 3));
 
         for (int i = 0; i < numToKnow; i++)
         {

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using Unity.AI.Navigation;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager Instance;
+
     [Header("Grid Settings")]
     [SerializeField] private int width = 10;
     [SerializeField] private int height = 10;
@@ -55,7 +58,15 @@ public class GridManager : MonoBehaviour
 
     public Vector2 MapWorldSize => new Vector2(width * cellSize, height * cellSize);
 
-
+    private void Awake()
+    {
+        if (Instance != null) {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         GenerateGrid();
@@ -476,6 +487,23 @@ public class GridManager : MonoBehaviour
     {
         isVisible = !isVisible;
 
+        renderVisiblity();
+    }
+
+    public void HideGrid()
+    {
+        isVisible = false;
+        renderVisiblity();
+    }
+
+    public void ShowGrid()
+    {
+        isVisible = true;
+        renderVisiblity();
+    }
+
+    private void renderVisiblity()
+    {
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
