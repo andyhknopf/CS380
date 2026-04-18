@@ -129,12 +129,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1522269313090010956, guid: 70e69c10162f50e458dc907c544fb011, type: 3}
       propertyPath: responses.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1522269313090010956, guid: 70e69c10162f50e458dc907c544fb011, type: 3}
       propertyPath: 'responses.Array.data[1]'
       value: 
-      objectReference: {fileID: 2048025522786806102, guid: 774ac83ed191c8e4a863bff6cf85f9e5, type: 3}
+      objectReference: {fileID: 820303046669048158, guid: b2ceee198ff2e394c9fad71a716a6140, type: 3}
     - target: {fileID: 4449452636545292766, guid: 70e69c10162f50e458dc907c544fb011, type: 3}
       propertyPath: m_Name
       value: DP_Conversation_General

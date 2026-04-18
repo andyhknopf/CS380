@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
     private List<GameObject> newsIcons = new List<GameObject>();
     private int currentTurn = 0;
     private float timer = 0f;
-    private List<News> newsList = new List<News>();
+    private List<News> globalNewsList = new List<News>();
     private bool isVisible = true;
 
     public Vector2 MapWorldSize => new Vector2(width * cellSize, height * cellSize);
@@ -205,7 +205,7 @@ public class GridManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.RightBracket)) // ]
         {
-            currentNewsIndex = Mathf.Min(newsList.Count - 1, currentNewsIndex + 1);
+            currentNewsIndex = Mathf.Min(globalNewsList.Count - 1, currentNewsIndex + 1);
             RefreshNewsIcons();
         }
 
@@ -216,11 +216,11 @@ public class GridManager : MonoBehaviour
 
     void OnTurnAdvanced()
     {
-        foreach (var news in newsList)
+        foreach (var news in globalNewsList)
         {
             List<GridNode> newlyReached = news.Spread(currentTurn, grid, width, height);
             foreach (var node in newlyReached)
-                node.newsColors.Add(news.GetColor());
+                node.newsIDs.Add(news.GetColor());
         }
 
         RefreshNewsIcons(); // do this every turn
@@ -239,9 +239,9 @@ public class GridManager : MonoBehaviour
         }
 
         news.Plant(node);
-        newsList.Add(news);
+        globalNewsList.Add(news);
         //SpawnNewsIcon(node, news.GetColor());
-        node.newsColors.Add(news.GetColor());
+        node.newsIDs.Add(news.GetColor());
 
         RefreshNewsIcons();
     }
@@ -258,11 +258,11 @@ public class GridManager : MonoBehaviour
 
         News news = new News();
         news.Plant(node);
-        newsList.Add(news);
+        globalNewsList.Add(news);
         //SpawnNewsIcon(node, news.GetColor());
-        node.newsColors.Add(news.GetColor());
+        node.newsIDs.Add(news.GetColor());
 
-        currentNewsIndex = newsList.Count - 1;
+        currentNewsIndex = globalNewsList.Count - 1;
         RefreshNewsIcons();
     }
 
@@ -321,11 +321,11 @@ public class GridManager : MonoBehaviour
             Destroy(icon);
         newsIcons.Clear();
 
-        totalNewsCount = newsList.Count;
-        if (newsList.Count == 0) return;
+        totalNewsCount = globalNewsList.Count;
+        if (globalNewsList.Count == 0) return;
 
-        currentNewsIndex = Mathf.Clamp(currentNewsIndex, 0, newsList.Count - 1);
-        News targetNews = newsList[currentNewsIndex];
+        currentNewsIndex = Mathf.Clamp(currentNewsIndex, 0, globalNewsList.Count - 1);
+        News targetNews = globalNewsList[currentNewsIndex];
         Color color = targetNews.GetColor();
 
         //Debug.Log($"[Refresh] index={currentNewsIndex}, color={color}, newsList={newsList.Count}");
@@ -337,7 +337,7 @@ public class GridManager : MonoBehaviour
                 GridNode node = grid[x, y];
 
 
-                if (!node.newsColors.Contains(color)) continue;
+                if (!node.newsIDs.Contains(color)) continue;
 
                 GameObject icon = new GameObject($"NewsIcon_{x}_{y}");
                 icon.transform.position = node.worldPos + new Vector3(0f, 0.5f, 0f);
@@ -439,11 +439,13 @@ public class GridManager : MonoBehaviour
     {
         if (!IsInBounds(x, y)) return null;
 
+        // List of every piece of news that has passed this node
         List<News> result = new List<News>();
         GridNode node = grid[x, y];
 
-        foreach (Color color in node.newsColors)
-            foreach (News news in newsList)
+        // For each piece of news ID
+        foreach (Color color in node.newsIDs)
+            foreach (News news in globalNewsList)
                 if (news.GetColor() == color)
                     result.Add(news);
 

@@ -18,7 +18,7 @@ public class GridNode
     public GameObject bgVisual;
 
     public int spreadCost = 1;
-    public List<Color> newsColors = new List<Color>();
+    public List<Color> newsIDs = new List<Color>();
     
     public int leftCount = 1; // Still working on this implementation, currently not being used
     // Purpose: fix the way delay(turn based) is working

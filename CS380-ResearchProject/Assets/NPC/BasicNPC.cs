@@ -12,8 +12,8 @@ public class BasicNPC : MonoBehaviour
 
     public City city;
     Vector3 initialPos;
-    public float Radius;
-
+    public float knowledgeRadius;
+    
     const int MAX_LOOPS = 10000;
     NavMeshAgent _agent;
 
@@ -34,7 +34,7 @@ public class BasicNPC : MonoBehaviour
       else
       {
           initialPos = city.transform.position;
-          Radius = city.GetComponent<CapsuleCollider>().radius;
+          // Radius = city.GetComponent<CapsuleCollider>().radius;
       }
 
       if (TTM_Range == Vector2.zero)
@@ -43,24 +43,60 @@ public class BasicNPC : MonoBehaviour
       if (Travel_Range == Vector2.zero)
           Travel_Range = new Vector2(4.0f, 6.0f);
 
-      if (Radius == 0) Radius = 8.0f;
+      if (knowledgeRadius == 0) knowledgeRadius = 8.0f;
 
         //mr.material.color = Color.red;
     }
 
     void Update()
     {
-        if (timer < 0.0f)
-        {
-            //Debug.Log("Moving NPC");
-            //StartCoroutine(MoveNPC());
-            MoveAgentRandomly();
-            timer = Random.Range(TTM_Range.x, TTM_Range.y);
-        }
-        timer -= Time.deltaTime;
+      // Talk to other NPCs if within range
+      TalkToOtherNPCs();
+
+      // Move randomly based on a timer
+      if (timer < 0.0f)
+      {
+        // Move randomly
+        MoveAgentRandomly();
+        timer = Random.Range(TTM_Range.x, TTM_Range.y);
+      }
+
+      // Decrease the timer count
+      timer -= Time.deltaTime;
     }
 
-    void MoveAgentRandomly()
+  private void TalkToOtherNPCs()
+  {
+    NPCBrain[] npcs = FindObjectsByType<NPCBrain>(FindObjectsSortMode.None);
+    Debug.Assert(npcs.Length > 1, "There should always be more than 1 basic NPC");
+    foreach (NPCBrain npc in npcs)
+    {
+      float dist = Vector3.Distance(transform.position, npc.transform.position);
+      if (dist > knowledgeRadius)
+        continue;
+
+      // Skip if the other NPC has any news
+      List<News> npcNewsList = npc.knownNewsList;
+      if (npcNewsList.Count == 0) return;
+
+      // If this piece of news is already known
+      if (npcNewsList[npcNewsList.Count - 1] == newsList[newsList.Count - 1])
+        continue;
+
+      //UNSURE IF NEWSLIST IS PASSED COPY OR REFERENCE, COULD BE ISSUE HERE
+      if (newsList.Contains(npcNewsList[npcNewsList.Count - 1]) == true)
+        continue;
+
+      News newNews = npcNewsList[npcNewsList.Count - 1];
+
+      //mr.material.color = newNews.GetColor();
+      //newsList.Add(newNews);
+      //city.colorMap[newNews.GetColor()] += 1;
+      LearnNews(newNews);
+    }
+  }
+
+  void MoveAgentRandomly()
     {
       float minDist = 5f;
       float maxDist = 50f;
@@ -82,39 +118,25 @@ public class BasicNPC : MonoBehaviour
              * if col newest exists in my news list -> keep color. IF NOT, change mesh color to newest news color
              * */
         }
-        if (collision.gameObject.tag == "NPC")
-        {
-            List<News> npcNewsList = collision.transform.GetComponent<NPCBrain>().knownNewsList;
-            if ( npcNewsList.Count == 0) return;
-
-
-            if(npcNewsList[npcNewsList.Count-1] != newsList[newsList.Count - 1])
-            {
-                if (newsList.Contains(npcNewsList[npcNewsList.Count - 1]) == false)    //UNSURE IF NEWSLIST IS PASSED COPY OR REFERENCE, COULD BE ISSUE HERE
-                {
-                    News newNews = npcNewsList[npcNewsList.Count - 1];
-                    //mr.material.color = newNews.GetColor();
-                    //newsList.Add(newNews);
-                    //city.colorMap[newNews.GetColor()] += 1;
-                    LearnNews(newNews);
-
-                }
-            }
-        }
     }
 
     public void LearnNews(News news)
     {
         mr.material.color = news.GetColor();
         newsList.Add(news);
+        //city.newestNews = news.GetColor();
+
+        // Add this npc to this list of npcs that know this news
         city.colorMap[news.GetColor()] += 1;
 
+        // Update the most popular piece of known news in this city
         if(city.colorMap[news.GetColor()] > city.amtKnownMost)
         {
-            city.newestNews = news.GetColor();
             city.amtKnownMost = city.colorMap[news.GetColor()];
         }
     }
+
+
     //IEnumerator MoveNPC()
     //{
     //    float TTM = Random.Range(TTM_Range.x, TTM_Range.y);
