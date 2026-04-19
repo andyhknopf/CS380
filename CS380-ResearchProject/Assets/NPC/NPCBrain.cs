@@ -51,16 +51,24 @@ public class NPCBrain : MonoBehaviour
 
     // TODO: Get dynamically from world data
     Vector3 subjectWorldPos = news.subject.location;
+    CityInner cityInner = FindFirstObjectByType<CityInner>();
+    Debug.Assert(cityInner != null, "This should never be null!");
+    CityNewsRegistry.CityData data = CityNewsRegistry.Instance._registry[cityInner.cityId];
 
     // Calculate heuristic based on opinion influencer
     switch (news.influencer)
     {
       // How far away are we from the subject in question?
       case News.OpinionInfluencer.DISTANCE_FROM_SUBJECT:
-        float maxDistance = 100.0f; // TODO: Replace with total map size
-        float dist = Vector3.Distance(subjectWorldPos, subjectWorldPos);
+
+        float maxDistance = 75.0f; // TODO: Replace with total map size
+        float dist = Vector3.Distance(data.location, subjectWorldPos);
         float normalizedDist = dist / maxDistance;
-        opinion = 1.0f - normalizedDist;
+
+        if (normalizedDist < 0.5f)
+          opinion = 1.0f;
+        else
+          opinion = 0.0f;
         break;
 
       // How loyal are we to the king?
@@ -70,10 +78,6 @@ public class NPCBrain : MonoBehaviour
 
       // How far north / south are we?
       case News.OpinionInfluencer.LATTITUDE:
-
-        CityInner cityInner = FindFirstObjectByType<CityInner>();
-        Debug.Assert(cityInner != null, "This should never be null!");
-        CityNewsRegistry.CityData data = CityNewsRegistry.Instance._registry[cityInner.cityId];
 
         float lattitude = data.location.z;
         float topMap = 25;
@@ -129,14 +133,11 @@ public class NPCBrain : MonoBehaviour
     {
       switch (heuristicValue)
       {
-        case -1:
-            explanation += "I live very far away.";
-          break;
         case 0:
-            explanation += "that's not too far away from here.";
+            explanation += "I live far away.";
           break;
         case 1:
-            explanation += "that's within walking distance!";
+            explanation += "that's very close to here";
           break;
       }
     }
