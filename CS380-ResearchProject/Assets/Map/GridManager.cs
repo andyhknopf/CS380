@@ -227,17 +227,36 @@ public class GridManager : MonoBehaviour
 
     void OnTurnAdvanced()
     {
+        News targetNews = globalNewsList.Count > 0 ? globalNewsList[currentNewsIndex] : null;
+
         foreach (var news in globalNewsList)
         {
             List<GridNode> newlyReached = news.Spread(currentTurn, grid, width, height);
             foreach (var node in newlyReached)
+            {
                 node.newsIDs.Add(news.GetID());
-        }
 
-        RefreshNewsIcons(); // do this every turn
+                if (targetNews != null && news.GetID() == targetNews.GetID())
+                    SpawnSingleNewsIcon(node, news.GetID());
+            }
+        }
     }
 
-    
+    void SpawnSingleNewsIcon(GridNode node, Color color)
+    {
+        GameObject icon = new GameObject($"NewsIcon_{node.x}_{node.y}");
+        icon.transform.position = node.worldPos + new Vector3(0f, 0.5f, 0f);
+        icon.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        icon.transform.localScale = Vector3.one * (cellSize * 0.5f / defaultSprite.bounds.size.x);
+
+        SpriteRenderer sr = icon.AddComponent<SpriteRenderer>();
+        sr.sprite = newsSprite != null ? newsSprite : defaultSprite;
+        sr.color = color;
+        sr.sortingOrder = 1000;
+        sr.enabled = isVisible;
+
+        newsIcons.Add(icon);
+    }
 
     void TryPlantGivenNews(int x, int y, News news)
     {
