@@ -5,6 +5,7 @@
  * DigiPen Institute of Technology 2026 (C)
  */
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -27,6 +28,7 @@ public class DialogueOption : MonoBehaviour
   {
     _textMesh = GetComponentInChildren<TextMeshProUGUI>();
     // _nextPrompt = null;
+
   }
 
   private void Update()
@@ -34,8 +36,9 @@ public class DialogueOption : MonoBehaviour
     // If news node has not been touched
     if (isNewsOption)
     {
-      string newsString = "Did you hear that " + news.newsString + "?"; // Add the question mark at the end
-      
+      string newsString = "Did you hear that <color=#" + news.GetID().ToHexString() + ">" + news.subject.name + " " + news.action.text + "</color>" + "?"; // Add the question mark at the end
+      _textMesh.text = newsString;
+      return;
     }
       
     _textMesh.text = text;

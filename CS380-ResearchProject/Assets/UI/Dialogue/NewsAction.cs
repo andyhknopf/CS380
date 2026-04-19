@@ -7,4 +7,6 @@ public class NewsAction
   public string name;
   [SerializeField]
   public string text;
+  [SerializeField]
+  public int value;
 }

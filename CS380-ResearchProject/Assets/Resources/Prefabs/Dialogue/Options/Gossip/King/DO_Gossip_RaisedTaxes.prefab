@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueOption
   _nextPrompt: {fileID: 4449452636545292766, guid: 6239f44274b0d794383567e1031687e6, type: 3}
-  text: Did you hear that the king raised taxes?
+  text: the King
   isNewsOption: 1
   news:
     id: {r: 1, g: 0, b: 0, a: 1}
@@ -300,6 +300,7 @@ MonoBehaviour:
         spreadCost: 1
         newsIDs: []
         leftCount: 1
+      location: {x: 0, y: 0, z: 0}
       positiveOpinionStrings:
       - I've waiting my whole life to hear this
       - I feel so good about it
@@ -315,6 +316,7 @@ MonoBehaviour:
     action:
       name: RaisedTaxes
       text: raised the taxes
+      value: 0
     reached: []
     newsString: 
     speed: 1

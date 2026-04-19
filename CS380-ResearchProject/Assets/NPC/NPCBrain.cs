@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Opinion;
 
 public class NPCBrain : MonoBehaviour
@@ -41,15 +42,23 @@ public class NPCBrain : MonoBehaviour
 
   public float CalculateOpinionHeuristic(News news)
   {
+    // Get access to the current cities data
+    //string currentCityName = SceneManager.GetActiveScene().name;
+    //CityNewsRegistry.CityData cityData = CityNewsRegistry.Instance._registry[currentCityName];
+    //cityData.cityPositions
+
     float opinion = 0.0f;
-    
+
+    // TODO: Get dynamically from world data
+    Vector3 subjectWorldPos = news.subject.location;
+
     // Calculate heuristic based on opinion influencer
     switch (news.influencer)
     {
       // How far away are we from the subject in question?
       case News.OpinionInfluencer.DISTANCE_FROM_SUBJECT:
         float maxDistance = 100.0f; // TODO: Replace with total map size
-        float dist = Vector3.Distance(news.subject.gridLocation.worldPos, gridLocation.worldPos);
+        float dist = Vector3.Distance(subjectWorldPos, subjectWorldPos);
         float normalizedDist = dist / maxDistance;
         opinion = 1.0f - normalizedDist;
         break;
@@ -61,90 +70,92 @@ public class NPCBrain : MonoBehaviour
 
       // How far north / south are we?
       case News.OpinionInfluencer.LATTITUDE: 
-        float lattitude = news.subject.gridLocation.worldPos.y;
+        float lattitude = subjectWorldPos.y;
         float topMap = 100f;
         float bottomMap = -100f;
         opinion = (topMap / bottomMap) + lattitude;
         break;
-     
     }
 
     return opinion;
   }
 
-  public string SetOpinionString(News news, float opinionValue)
+  public string SetOpinionString(News news, float heuristicValue)
   {
     string opinionString = string.Empty;
 
-    // Negative opinion
-    if (opinionValue <= -1)
+    // Get the opinon based on heuristic and action positivity (positive or negative from perspective of if NPC likes the subject)
+    float weightedOpinion = heuristicValue * news.action.value;
+
+    // Randomly choose a string chunk to say
+    int randIndex = Random.Range(0, news.subject.negativeOpinionStrings.Count);
+
+    if (weightedOpinion < 0) // Negative opinion
     {
-      int randIndex = Random.Range(0, news.subject.negativeOpinionStrings.Count);
       opinionString += news.subject.negativeOpinionStrings[randIndex] + " because ";
-      opinionString += GetExplanationOfInfluence((int)opinionValue, news.influencer);
+      opinionString += GetExplanationOfInfluence((int)heuristicValue, news.influencer);
     }
-    else if (opinionValue == 0) // Neutral opinion
+    else if (weightedOpinion == 0) // Neutral opinion
     {
-      int randIndex = Random.Range(0, news.subject.neutralOpinionStrings.Count);
       opinionString += news.subject.neutralOpinionStrings[randIndex] + " because ";
-      opinionString += GetExplanationOfInfluence((int)opinionValue, news.influencer);
+      opinionString += GetExplanationOfInfluence((int)heuristicValue, news.influencer);
     }
-    else if (opinionValue > 0) // Positive opinion
+    else if (weightedOpinion > 0) // Positive opinion
     {
-      int randIndex = Random.Range(0, news.subject.positiveOpinionStrings.Count);
       opinionString += news.subject.positiveOpinionStrings[randIndex] + " because ";
-      opinionString += GetExplanationOfInfluence((int)opinionValue, news.influencer);
+      opinionString += GetExplanationOfInfluence((int)heuristicValue, news.influencer);
     }
 
     return opinionString;
   }
 
-  public string GetExplanationOfInfluence(int opinionValue, News.OpinionInfluencer opInfluencer)
+  public string GetExplanationOfInfluence(int heuristicValue, News.OpinionInfluencer opInfluencer)
   {
     string explanation = string.Empty;
-    if (opinionValue <= -1)
+
+    if (opInfluencer == News.OpinionInfluencer.DISTANCE_FROM_SUBJECT)
     {
-      if (opInfluencer == News.OpinionInfluencer.DISTANCE_FROM_SUBJECT)
+      switch (heuristicValue)
       {
-        explanation += "I live very far away.";
-      }
-      else if (opInfluencer == News.OpinionInfluencer.LOYALTY_TO_KING)
-      {
-        explanation += "I hate the king!";
-      }
-      else if (opInfluencer == News.OpinionInfluencer.LATTITUDE)
-      {
-        explanation += "I was born and raised down here in the south.";
+        case -1:
+            explanation += "I live very far away.";
+          break;
+        case 0:
+            explanation += "that's not too far away from here.";
+          break;
+        case 1:
+            explanation += "that's within walking distance!";
+          break;
       }
     }
-    else if (opinionValue == 0)
+    else if (opInfluencer == News.OpinionInfluencer.LOYALTY_TO_KING)
     {
-      if (opInfluencer == News.OpinionInfluencer.DISTANCE_FROM_SUBJECT)
+      switch (heuristicValue)
       {
-        explanation += "that's not too far away from here.";
-      }
-      else if (opInfluencer == News.OpinionInfluencer.LOYALTY_TO_KING)
-      {
-        explanation += "politics make me uncomfy so I don't think about it.";
-      }
-      else if (opInfluencer == News.OpinionInfluencer.LATTITUDE)
-      {
-        explanation += "I live in the sweet-spot between north and south.";
+        case -1:
+            explanation += "I hate the king!";
+          break;
+        case 0:
+            explanation += "politics make me uncomfy so I don't think about it.";
+          break;
+        case 1:
+            explanation += "I love the king, I don't care what files his name is mentioned in!";
+          break;
       }
     }
-    else if (opinionValue > 0)
+    else if (opInfluencer == News.OpinionInfluencer.LATTITUDE)
     {
-      if (opInfluencer == News.OpinionInfluencer.DISTANCE_FROM_SUBJECT)
+      switch (heuristicValue)
       {
-        explanation += "that's within walking distance!";
-      }
-      else if (opInfluencer == News.OpinionInfluencer.LOYALTY_TO_KING)
-      {
-        explanation += "I love the king, I don't care what files his name is mentioned in!";
-      }
-      else if (opInfluencer == News.OpinionInfluencer.LATTITUDE)
-      {
-        explanation += "I live here in the frigid north.";
+        case -1:
+            explanation += "I was born and raised down here in the south.";
+          break;
+        case 0:
+            explanation += "I live in the sweet-spot between north and south.";
+          break;
+        case 1:
+            explanation += "I live here in the frigid north.";
+          break;
       }
     }
     else

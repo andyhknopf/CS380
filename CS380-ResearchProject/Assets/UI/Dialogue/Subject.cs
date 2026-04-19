@@ -7,6 +7,7 @@ public class Subject
 {
   public string name;
   public GridNode gridLocation;
+  public Vector3 location;
   public static List<Subject> globalSubjects = new List<Subject>();
   public List<string> positiveOpinionStrings = new List<string>();
   public List<string> neutralOpinionStrings = new List<string>();
