@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity3
-  spreadSpeed: 3
+  spreadSpeed: 4
 --- !u!4 &100834005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
@@ -561,7 +561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.9
+      value: -18.3
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalRotation.w
@@ -777,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.6
+      value: -17.5
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.y
@@ -785,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.1
+      value: 11.1
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1385,7 +1385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity2
-  spreadSpeed: 5
+  spreadSpeed: 8
 --- !u!4 &667243159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
@@ -2473,7 +2473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity1
-  spreadSpeed: 5
+  spreadSpeed: 8
 --- !u!4 &1387475099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
@@ -2852,7 +2852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
       propertyPath: turnSpeed
-      value: 0.25
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 7513361924806059747, guid: 2292e92fd00b37642aeff8f946ff824e, type: 3}
       propertyPath: fieldColor.b
@@ -3010,7 +3010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity3
-  spreadSpeed: 5
+  spreadSpeed: 8
 --- !u!4 &1488348437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
@@ -3127,7 +3127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity2
-  spreadSpeed: 3
+  spreadSpeed: 4
 --- !u!4 &1605708571 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
@@ -3843,7 +3843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity1
-  spreadSpeed: 3
+  spreadSpeed: 4
 --- !u!4 &2121370739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
