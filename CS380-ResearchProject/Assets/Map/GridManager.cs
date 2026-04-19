@@ -428,12 +428,16 @@ public class GridManager : MonoBehaviour
 
     void OnGUI()
     {
-        GUIStyle style = new GUIStyle(GUI.skin.label);
+        GUIStyle style = new GUIStyle();
         style.normal.textColor = Color.black;
+        style.fontSize = 14;
 
-        GUI.Label(new Rect(10, 10, 200, 30), $"Turn: {currentTurn}");
+        GUI.Label(new Rect(10, 10, 200, 30), $"Turn: {currentTurn}", style);
         if (globalNewsList.Count > 0)
-            GUI.Label(new Rect(10, 40, 200, 30), $"News: {currentNewsIndex + 1} / {globalNewsList.Count}");
+        {
+            GUI.Label(new Rect(10, 40, 200, 30), $"News: {currentNewsIndex + 1} / {globalNewsList.Count}", style);
+            GUI.Label(new Rect(10, 70, 200, 30), $"\'[\' / \']\' : Prev / Next News", style);
+        }
     }
 
     public Color GetTerrainColor(TerrainType terrain)
