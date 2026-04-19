@@ -162,6 +162,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MidCity3
       objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.595
@@ -518,6 +526,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigCity1
       objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalScale.x
       value: 5.19
@@ -728,6 +744,14 @@ PrefabInstance:
     - target: {fileID: 241398807310697226, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_Name
       value: BigCity2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalScale.x
@@ -1263,6 +1287,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LittleCity2
       objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30.45
@@ -1339,71 +1371,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity2
   spreadSpeed: 5
---- !u!1001 &682785766
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4106760760475113880, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: knowledgeRadius
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7105131907947091357, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: d75000d939c4c4c49a20bfc684a32b79, type: 2}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 9.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9207303805635934376, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_Name
-      value: AndyNPC (1)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
 --- !u!1 &798061625
 GameObject:
   m_ObjectHideFlags: 0
@@ -2203,6 +2170,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigCity3
       objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalScale.x
       value: 5.19
@@ -2894,6 +2869,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LittleCity3
       objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.97
@@ -2981,6 +2964,14 @@ PrefabInstance:
     - target: {fileID: 241398807310697226, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_Name
       value: MidCity2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalScale.x
@@ -3074,6 +3065,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity2
   spreadSpeed: 3
+--- !u!1 &1649217137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1649217139}
+  - component: {fileID: 1649217138}
+  m_Layer: 0
+  m_Name: TownLocationData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1649217138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649217137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1600d04dafc25438549aaac22e63ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!4 &1649217139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649217137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.43729, y: 0, z: -15.09818}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1731010405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,7 +3291,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   citySceneNames:
-  - LittleCity
+  - LittleCity1
+  - LittleCity2
+  - LittleCity3
+  - MidCity1
+  - MidCity2
+  - MidCity3
+  - BigCity1
+  - BigCity2
+  - BigCity3
 --- !u!4 &1903858948
 Transform:
   m_ObjectHideFlags: 0
@@ -3623,6 +3666,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MidCity1
       objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.595
@@ -3715,71 +3766,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity1
   spreadSpeed: 3
---- !u!1001 &1013596245957428466
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4106760760475113880, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: knowledgeRadius
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7105131907947091357, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: d75000d939c4c4c49a20bfc684a32b79, type: 2}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7258767783046302566, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9207303805635934376, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
-      propertyPath: m_Name
-      value: AndyNPC
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8cb2523ab7ad58f4f8405ab8470dd8e9, type: 3}
 --- !u!1001 &4277147147598957835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3791,6 +3777,14 @@ PrefabInstance:
     - target: {fileID: 241398807310697226, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_Name
       value: LittleCity1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803596464659462680, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3875,7 +3869,6 @@ SceneRoots:
   - {fileID: 2091953289}
   - {fileID: 976048599}
   - {fileID: 1896554279}
-  - {fileID: 1013596245957428466}
-  - {fileID: 682785766}
   - {fileID: 1313152415}
   - {fileID: 1903858948}
+  - {fileID: 1649217139}

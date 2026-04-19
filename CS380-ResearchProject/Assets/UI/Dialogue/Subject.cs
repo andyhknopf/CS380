@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class Subject
 {
   public string name;
-  [HideInInspector] public GridNode gridLocation;
+  public GridNode gridLocation;
   public static List<Subject> globalSubjects = new List<Subject>();
   public List<string> positiveOpinionStrings = new List<string>();
   public List<string> neutralOpinionStrings = new List<string>();

@@ -7,7 +7,7 @@ public class CityNewsData : MonoBehaviour
     public static CityNewsData Instance;
 
 
-    private Dictionary<string, CityData> _registry = new();
+    public Dictionary<string, CityData> _registry = new();
     public List<string> citySceneNames;
 
 
