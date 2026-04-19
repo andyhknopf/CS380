@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static CityNewsData;
+using static CityNewsRegistry;
 
 public class CityNewsListener : MonoBehaviour
 {
@@ -14,9 +14,9 @@ public class CityNewsListener : MonoBehaviour
     void Awake()
     {
         gm = FindFirstObjectByType<GridManager>();
-        if (CityNewsData.Instance == null)
+        if (CityNewsRegistry.Instance == null)
         {
-            CityNewsData registry = FindFirstObjectByType<CityNewsData>();
+            CityNewsRegistry registry = FindFirstObjectByType<CityNewsRegistry>();
             if (registry == null)
             {
                 Debug.LogError("Cannot find CityNewsData anywhere in scene!");
@@ -26,7 +26,7 @@ public class CityNewsListener : MonoBehaviour
             Debug.LogWarning("CityNewsData.Instance was null, found it via FindFirstObjectByType");
             return;
         }
-        _data = CityNewsData.Instance.GetOrCreate(citySceneName);
+        _data = CityNewsRegistry.Instance.GetOrCreate(citySceneName);
     }
 
     // Update is called once per frame

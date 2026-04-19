@@ -262,6 +262,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity3
   spreadSpeed: 3
+--- !u!4 &100834005 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 100833998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &112947527
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +631,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: BigCity1
   spreadSpeed: 1
+--- !u!4 &289299957 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 289299950}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &307102272
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +855,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: BigCity2
   spreadSpeed: 1
+--- !u!4 &351582339 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 351582332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &375384719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,6 +1386,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity2
   spreadSpeed: 5
+--- !u!4 &667243159 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 667243152}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &798061625
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,6 +2290,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: BigCity3
   spreadSpeed: 1
+--- !u!4 &1254048112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 1254048105}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1313152409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2449,6 +2474,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity1
   spreadSpeed: 5
+--- !u!4 &1387475099 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 4277147147598957835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1427615469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6491707645126646458, guid: a70ad05711a88d04f968a72b48a9c7f1, type: 3}
@@ -2953,6 +2983,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: LittleCity3
   spreadSpeed: 5
+--- !u!4 &1488348437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 1488348430}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1605708564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3065,6 +3100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity2
   spreadSpeed: 3
+--- !u!4 &1605708571 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 1605708564}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1649217137
 GameObject:
   m_ObjectHideFlags: 0
@@ -3300,6 +3340,16 @@ MonoBehaviour:
   - BigCity1
   - BigCity2
   - BigCity3
+  locations:
+  - {fileID: 1387475099}
+  - {fileID: 667243159}
+  - {fileID: 1488348437}
+  - {fileID: 2121370739}
+  - {fileID: 1605708571}
+  - {fileID: 100834005}
+  - {fileID: 289299957}
+  - {fileID: 351582339}
+  - {fileID: 1254048112}
 --- !u!4 &1903858948
 Transform:
   m_ObjectHideFlags: 0
@@ -3766,6 +3816,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   citySceneName: MidCity1
   spreadSpeed: 3
+--- !u!4 &2121370739 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5664325867603835088, guid: 4e64c5ea4c30ff0438768566db397133, type: 3}
+  m_PrefabInstance: {fileID: 2121370732}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4277147147598957835
 PrefabInstance:
   m_ObjectHideFlags: 0

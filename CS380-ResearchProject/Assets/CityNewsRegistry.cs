@@ -2,18 +2,25 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityNewsData : MonoBehaviour
+public class CityNewsRegistry : MonoBehaviour
 {
-    public static CityNewsData Instance;
+    public static CityNewsRegistry Instance;
 
 
     public Dictionary<string, CityData> _registry = new();
     public List<string> citySceneNames;
 
 
+    [SerializeField] private List<Transform> _locations;
+
+    //private List<Vector3> cityPositions
+    //public Dictionary<string, Vector3> cityPositions = new();
+
+
     [System.Serializable]
     public class CityData
     {
+        public Vector3 location; //World position on big map
         public List<News> receivedNews = new();
         public List<News> sentNews = new();
         public Dictionary<Color, int> npcKnowledgeMap = new(); // newsId -> count
@@ -41,6 +48,16 @@ public class CityNewsData : MonoBehaviour
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < citySceneNames.Count; i++)
+        {
+            //cityPositions[citySceneNames[i]] = new CityData();
+            CityData cd = GetOrCreate(citySceneNames[i]);
+            cd.location = _locations[i].position;
+        }
     }
 
     // Update is called once per frame

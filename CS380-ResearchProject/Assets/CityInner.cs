@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static CityNewsData;
+using static CityNewsRegistry;
 
 public class CityInner : MonoBehaviour
 {
@@ -25,9 +25,9 @@ public class CityInner : MonoBehaviour
             npcs.Add(npc.gameObject);
 
 
-        if (CityNewsData.Instance == null)
+        if (CityNewsRegistry.Instance == null)
         {
-            CityNewsData registry = FindFirstObjectByType<CityNewsData>();
+            CityNewsRegistry registry = FindFirstObjectByType<CityNewsRegistry>();
             if (registry == null)
             {
                 Debug.LogError("Cannot find CityNewsData anywhere in scene!");
@@ -39,7 +39,7 @@ public class CityInner : MonoBehaviour
             return;
         }
 
-        _data = CityNewsData.Instance.GetOrCreate(cityId);
+        _data = CityNewsRegistry.Instance.GetOrCreate(cityId);
         _data.totalNPCs = npcs.Count;
 
 
