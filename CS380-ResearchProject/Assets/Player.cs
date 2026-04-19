@@ -49,10 +49,10 @@ public class Player : MonoBehaviour
             moveSpeed = Mathf.Clamp(moveSpeed - incrementDelta, 0, 0.4f);
 
         //TEMPORARY: CREATE NEWS FROM CURRENT POS
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && Debug.isDebugBuild)
             gridManager.PlantNewsAtWorldPosition(pos);
 
-        if (Input.GetKey(KeyCode.V))
+        if (Input.GetKey(KeyCode.V) && Debug.isDebugBuild)
             gridManager.EditMap(pos);
 
         if (targets.Count > 0)

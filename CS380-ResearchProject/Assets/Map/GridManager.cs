@@ -190,7 +190,7 @@ public class GridManager : MonoBehaviour
         //}
 
         // TEMP & DEBUGGING for news creatino
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && Debug.isDebugBuild)
         {
             Vector3 screenPos = new Vector3(
                 Input.mousePosition.x,
@@ -204,7 +204,7 @@ public class GridManager : MonoBehaviour
         }
 
         // TEST for visibility
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) && Debug.isDebugBuild)
         {
             ToggleVisibility();
         }
@@ -221,7 +221,7 @@ public class GridManager : MonoBehaviour
         }
 
         // SAVE to JSON
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && Debug.isDebugBuild)
             SaveMap();
     }
 
@@ -279,6 +279,7 @@ public class GridManager : MonoBehaviour
         //SpawnNewsIcon(node, news.GetColor());
         node.newsIDs.Add(news.GetID());
 
+        currentNewsIndex = globalNewsList.Count - 1;
         RefreshNewsIcons();
     }
 
