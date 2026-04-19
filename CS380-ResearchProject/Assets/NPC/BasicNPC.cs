@@ -181,13 +181,13 @@ public class BasicNPC : MonoBehaviour
         //city.newestNews = news.GetColor();
 
         // Add this npc to this list of npcs that know this news
-        city.colorMap[news.GetID()] += 1;
+        //city.colorMap[news.GetID()] += 1;
 
-        // Update the most popular piece of known news in this city
-        if(city.colorMap[news.GetID()] > city.amtKnownMost)
-        {
-            city.amtKnownMost = city.colorMap[news.GetID()];
-        }
+        //// Update the most popular piece of known news in this city
+        //if(city.colorMap[news.GetID()] > city.amtKnownMost)
+        //{
+        //    city.amtKnownMost = city.colorMap[news.GetID()];
+        //}
     }
 
 
