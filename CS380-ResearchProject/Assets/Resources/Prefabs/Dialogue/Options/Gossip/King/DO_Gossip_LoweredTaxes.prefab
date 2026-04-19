@@ -316,7 +316,7 @@ MonoBehaviour:
     action:
       name: LoweredTaxes
       text: has lowered taxes
-      value: 0
+      value: 1
     reached:
     - x: 0
       y: 0

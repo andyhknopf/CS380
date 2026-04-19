@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 5465125580062751544}
   - component: {fileID: 2648156932394143703}
   m_Layer: 0
-  m_Name: AndyNPC
+  m_Name: NPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -540,7 +540,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 924873dffc3c9cc4eaced464a5606cd2, type: 2}
+  - {fileID: 2100000, guid: d75000d939c4c4c49a20bfc684a32b79, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -602,7 +602,7 @@ MonoBehaviour:
   TTM_Range: {x: 0, y: 0}
   Travel_Range: {x: 0, y: 0}
   city: {fileID: 0}
-  Radius: 12
+  knowledgeRadius: 0
   newsList: []
 --- !u!54 &6197167839959764144
 Rigidbody:
@@ -673,9 +673,35 @@ MonoBehaviour:
     visual: {fileID: 0}
     bgVisual: {fileID: 0}
     spreadCost: 1
-    newsColors: []
+    newsIDs: []
     leftCount: 1
   knownNewsList: []
+  lastReceivedNews:
+    id: {r: 0, g: 0, b: 0, a: 0}
+    subject:
+      name: 
+      gridLocation:
+        x: 0
+        y: 0
+        terrain: 0
+        worldPos: {x: 0, y: 0, z: 0}
+        visual: {fileID: 0}
+        bgVisual: {fileID: 0}
+        spreadCost: 1
+        newsIDs: []
+        leftCount: 1
+      location: {x: 0, y: 0, z: 0}
+      positiveOpinionStrings: []
+      neutralOpinionStrings: []
+      negativeOpinionStrings: []
+    action:
+      name: 
+      text: 
+      value: 0
+    reached: []
+    newsString: 
+    speed: 1
+    influencer: 0
 --- !u!1001 &460689693963289690
 PrefabInstance:
   m_ObjectHideFlags: 0

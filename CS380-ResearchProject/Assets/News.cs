@@ -54,7 +54,7 @@ public class News
 
     public void Plant(GridNode origin)
     {
-        this.id = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
+        // this.id = UnityEngine.Random.ColorHSV(0f, 1f, 0.8f, 1f, 0.8f, 1f);
 
         reached.Add(origin);
         int initialDelay = speed * origin.spreadCost;

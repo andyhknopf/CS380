@@ -316,7 +316,7 @@ MonoBehaviour:
     action:
       name: RaisedTaxes
       text: raised the taxes
-      value: 0
+      value: 1
     reached: []
     newsString: 
     speed: 1

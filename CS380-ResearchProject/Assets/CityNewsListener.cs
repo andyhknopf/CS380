@@ -58,17 +58,23 @@ public class CityNewsListener : MonoBehaviour
         {
             if (_data.HasSent(n)) continue;
 
-            int known = _data.GetKnownCount(n);
-            //if (_data.totalNPCs > 0 && known > _data.totalNPCs / 2)
-            if (_data.totalNPCs > 0)
-            {
-                //change news speed here? taken from city
-                n.speed = spreadSpeed;
-                gm.PlantGivenNewsAtWorldPosition(transform.position, n);
-                Debug.Log($"{gameObject.name} : {transform.position}");
-                _data.sentNews.Add(n);
-            }
-        }
+            n.speed = spreadSpeed;
+            gm.PlantGivenNewsAtWorldPosition(transform.position, n);
+            Debug.Log($"{gameObject.name} : {transform.position}");
+            _data.sentNews.Add(n);
+
+            //int known = _data.GetKnownCount(n);
+
+            ////if (_data.totalNPCs > 0 && known > _data.totalNPCs / 2)
+            //if (_data.totalNPCs > 0)
+            //{
+            //    //change news speed here? taken from city
+            //    n.speed = spreadSpeed;
+            //    gm.PlantGivenNewsAtWorldPosition(transform.position, n);
+            //    Debug.Log($"{gameObject.name} : {transform.position}");
+            //    _data.sentNews.Add(n);
+            //}
+      }
     }
 
 
