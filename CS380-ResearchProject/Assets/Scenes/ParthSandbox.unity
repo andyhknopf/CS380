@@ -3340,7 +3340,7 @@ MonoBehaviour:
   - BigCity1
   - BigCity2
   - BigCity3
-  locations:
+  _locations:
   - {fileID: 1387475099}
   - {fileID: 667243159}
   - {fileID: 1488348437}
