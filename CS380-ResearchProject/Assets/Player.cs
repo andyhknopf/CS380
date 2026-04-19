@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
 {
@@ -19,7 +19,8 @@ public class Player : MonoBehaviour
     {
         moveSpeed /= 100.0f;
         incrementDelta /= 100.0f;
-        gridManager = FindFirstObjectByType<GridManager>();
+        //gridManager = FindFirstObjectByType<GridManager>();
+        gridManager = GridManager.Instance;
     }
 
     // Update is called once per frame
