@@ -45,6 +45,7 @@ public class City : MonoBehaviour
 
 
       gm = GameObject.Find("GridManager").GetComponent<GridManager>();
+        gm.SetVisibility(false);
       Vector2Int gridPos = gm.WorldToGrid(transform.position);
       gridNode = gm.GetNode(gridPos.x, gridPos.y);
       cityNewsList.Add(null);
@@ -63,7 +64,7 @@ public class City : MonoBehaviour
       if (amtKnownMost > NPCs.Count / 2)
       {
         //plant it on the world map at this city 
-        GameObject.Find("GridManager").GetComponent<GridManager>().PlantNewsAtWorldPosition(transform.position);
+        //GameObject.Find("GridManager").GetComponent<GridManager>().PlantNewsAtWorldPosition(transform.position);
 
         // TODO: Remove the piece of news from the cities news list
       }

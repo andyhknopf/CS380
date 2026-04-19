@@ -490,6 +490,13 @@ public class GridManager : MonoBehaviour
         renderVisiblity();
     }
 
+    public void SetVisibility(bool set)
+    {
+        isVisible = set;
+
+        renderVisiblity();
+    }
+
     public void HideGrid()
     {
         isVisible = false;

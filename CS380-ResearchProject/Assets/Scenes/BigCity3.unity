@@ -10420,6 +10420,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3231256455163399137, guid: 979c191ea36b7364e9c7e8d96a53618f, type: 3}
+      propertyPath: cityId
+      value: BigCity3
+      objectReference: {fileID: 0}
     - target: {fileID: 3595392940716296665, guid: 979c191ea36b7364e9c7e8d96a53618f, type: 3}
       propertyPath: numNPCs
       value: 10
