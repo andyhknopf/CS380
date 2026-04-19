@@ -88,6 +88,7 @@ public class BasicNPC : MonoBehaviour
         newNews = npcNewsList[npcNewsList.Count - 1];
         CreateNewsLine(npc, newNews);
         LearnNews(newNews);
+
         return;
       }
 
@@ -169,6 +170,11 @@ public class BasicNPC : MonoBehaviour
 
     public void LearnNews(News news)
     {
+        CityInner cityInner = FindFirstObjectByType<CityInner>();
+        Debug.Assert(cityInner != null, "This should never be null!");
+
+        cityInner.OnNPCLearnedNews(news);
+
         GetComponent<NPCBrain>().lastReceivedNews = news;
         mr.material.color = news.GetID();
         newsList.Add(news);

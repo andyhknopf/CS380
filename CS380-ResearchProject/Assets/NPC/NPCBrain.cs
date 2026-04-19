@@ -20,6 +20,14 @@ public class NPCBrain : MonoBehaviour
 
   private void Awake()
   {
+    // 3 test opinionInfluencers
+
+    // Loyalty to king
+
+    // Distance from subject
+
+    // 
+
     if (_loyaltyToKing == UNINITIALIZED_VALUE)
       _loyaltyToKing = Random.Range(-1, 2);
   }
@@ -38,17 +46,21 @@ public class NPCBrain : MonoBehaviour
     // Calculate heuristic based on opinion influencer
     switch (news.influencer)
     {
-      case News.OpinionInfluencer.DISTANCE_FROM_SUBJECT: // Further away 
-
+      // How far away are we from the subject in question?
+      case News.OpinionInfluencer.DISTANCE_FROM_SUBJECT:
         float maxDistance = 100.0f; // TODO: Replace with total map size
         float dist = Vector3.Distance(news.subject.gridLocation.worldPos, gridLocation.worldPos);
         float normalizedDist = dist / maxDistance;
         opinion = 1.0f - normalizedDist;
         break;
+
+      // How loyal are we to the king?
       case News.OpinionInfluencer.LOYALTY_TO_KING:
         opinion = _loyaltyToKing;
         break;
-      case News.OpinionInfluencer.LATTITUDE:
+
+      // How far north / south are we?
+      case News.OpinionInfluencer.LATTITUDE: 
         float lattitude = news.subject.gridLocation.worldPos.y;
         float topMap = 100f;
         float bottomMap = -100f;
