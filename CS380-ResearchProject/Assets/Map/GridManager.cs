@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using Unity.AI.Navigation;
-using UnityEditor.ShaderGraph;
+//using UnityEditor.ShaderGraph;
 using UnityEngine;
-using UnityEngine.AI;
+//using UnityEngine.AI;
 
 public class GridManager : MonoBehaviour
 {
@@ -546,8 +546,7 @@ public class GridManager : MonoBehaviour
     private string SavePath()
     {
         string dir = Path.Combine(Application.dataPath, "Data");
-        Directory.CreateDirectory(dir); // if theres no /Data
-
+        Directory.CreateDirectory(dir);
         return Path.Combine(dir, $"map_{gameObject.name}.json");
     }
 
@@ -568,18 +567,28 @@ public class GridManager : MonoBehaviour
 
     public void LoadMap()
     {
-        if (!File.Exists(SavePath()))
+        //if (!File.Exists(SavePath()))
+        //{
+        //    Debug.Log("No save file found, using default map.");
+        //    return;
+        //}
+
+        TextAsset asset = Resources.Load<TextAsset>($"map_{gameObject.name}");
+        if (asset == null)
         {
-            Debug.Log("No save file found, using default map.");
+            Debug.Log("No default map found in Resources.");
             return;
         }
+        string json = asset.text;
+        Debug.Log("Loaded default map from Resources");
 
-        MapSaveData data = JsonUtility.FromJson<MapSaveData>(File.ReadAllText(SavePath()));
+        //MapSaveData data = JsonUtility.FromJson<MapSaveData>(File.ReadAllText(SavePath()));
+        MapSaveData data = JsonUtility.FromJson<MapSaveData>(json);
 
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 SetTerrain(x, y, (TerrainType)data.terrainData[x * height + y]);
 
-        Debug.Log($"Map loaded: {SavePath()}");
+        //Debug.Log($"Map loaded: {SavePath()}");
     }
 }
