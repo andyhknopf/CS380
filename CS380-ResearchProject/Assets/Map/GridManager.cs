@@ -533,12 +533,16 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
-                grid[x, y].visual.GetComponent<SpriteRenderer>().enabled = isVisible;
-                grid[x, y].bgVisual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                if (grid[x, y].visual != null)
+                {
+                    grid[x, y].visual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                    grid[x, y].bgVisual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                }
             }
 
         foreach (var icon in newsIcons)
-            icon.GetComponent<SpriteRenderer>().enabled = isVisible;
+            if (icon != null)
+                icon.GetComponent<SpriteRenderer>().enabled = isVisible;
     }
 
     //////////////////////////////////////////////////////////////
