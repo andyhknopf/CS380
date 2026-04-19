@@ -9,7 +9,7 @@ public class CityInner : MonoBehaviour
 
     private CityData _data;
 
-    public string cityHomeSceneName = "ParthSandbox";
+    public string cityHomeSceneName = "DemoScene";
 
     private GridManager gm;
 
