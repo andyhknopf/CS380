@@ -157,7 +157,7 @@ public class BasicNPC : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             Debug.Log("Player collision");
-            GameObject.Find("GridManager").GetComponent<GridManager>().PlantNewsAtWorldPosition(collision.transform.position);
+            //GameObject.Find("GridManager").GetComponent<GridManager>().PlantNewsAtWorldPosition(collision.transform.position);
 
             //if collision is NPC
             /*

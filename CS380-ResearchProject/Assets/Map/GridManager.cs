@@ -268,6 +268,12 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        foreach (News prevNews in globalNewsList)
+        {
+            if (prevNews.GetID() == news.GetID())
+                return;
+        }
+
         news.Plant(node);
         globalNewsList.Add(news);
         //SpawnNewsIcon(node, news.GetColor());
