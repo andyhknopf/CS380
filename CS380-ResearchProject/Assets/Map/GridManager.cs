@@ -268,6 +268,12 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        foreach (News prevNews in globalNewsList)
+        {
+            if (prevNews.GetID() == news.GetID())
+                return;
+        }
+
         news.Plant(node);
         globalNewsList.Add(news);
         //SpawnNewsIcon(node, news.GetColor());
@@ -422,7 +428,16 @@ public class GridManager : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 200, 30), $"Turn: {currentTurn}");
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.black;
+        style.fontSize = 14;
+
+        GUI.Label(new Rect(10, 10, 200, 30), $"Turn: {currentTurn}", style);
+        if (globalNewsList.Count > 0)
+        {
+            GUI.Label(new Rect(10, 40, 200, 30), $"News: {currentNewsIndex + 1} / {globalNewsList.Count}", style);
+            GUI.Label(new Rect(10, 70, 200, 30), $"\'[\' / \']\' : Prev / Next News", style);
+        }
     }
 
     public Color GetTerrainColor(TerrainType terrain)
@@ -533,12 +548,16 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
-                grid[x, y].visual.GetComponent<SpriteRenderer>().enabled = isVisible;
-                grid[x, y].bgVisual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                if (grid[x, y].visual != null)
+                {
+                    grid[x, y].visual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                    grid[x, y].bgVisual.GetComponent<SpriteRenderer>().enabled = isVisible;
+                }
             }
 
         foreach (var icon in newsIcons)
-            icon.GetComponent<SpriteRenderer>().enabled = isVisible;
+            if (icon != null)
+                icon.GetComponent<SpriteRenderer>().enabled = isVisible;
     }
 
     //////////////////////////////////////////////////////////////
