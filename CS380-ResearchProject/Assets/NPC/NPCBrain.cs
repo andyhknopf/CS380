@@ -69,11 +69,23 @@ public class NPCBrain : MonoBehaviour
         break;
 
       // How far north / south are we?
-      case News.OpinionInfluencer.LATTITUDE: 
-        float lattitude = subjectWorldPos.y;
-        float topMap = 100f;
-        float bottomMap = -100f;
-        opinion = (topMap / bottomMap) + lattitude;
+      case News.OpinionInfluencer.LATTITUDE:
+
+        CityInner cityInner = FindFirstObjectByType<CityInner>();
+        Debug.Assert(cityInner != null, "This should never be null!");
+        CityNewsRegistry.CityData data = CityNewsRegistry.Instance._registry[cityInner.cityId];
+
+        float lattitude = data.location.z;
+        float topMap = 25;
+        float bottomMap = -25f;
+
+        if (lattitude > topMap)
+          opinion = 1;
+        else if (lattitude < topMap && lattitude > bottomMap)
+          opinion = 0;
+        else if (lattitude < bottomMap)
+          opinion = -1;
+
         break;
     }
 

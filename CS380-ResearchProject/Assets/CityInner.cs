@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static CityNewsRegistry;
 
 public class CityInner : MonoBehaviour
@@ -9,7 +10,7 @@ public class CityInner : MonoBehaviour
 
     private CityData _data;
 
-    public string cityHomeSceneName = "DemoScene";
+    public string cityHomeSceneName = "ParthSandbox";
 
     private GridManager gm;
 
