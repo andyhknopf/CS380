@@ -27,41 +27,22 @@ bool AStarPather::initialize()
     for (int col = 0; col < MAX_MAP_SIZE; col++)
     {
       gridMap[row][col].gridPos = GridPos(row, col);
-      //assert(gridMap[row][col].gridPos.row < MAX_MAP_SIZE * MAX_MAP_SIZE || 
-             //gridMap[row][col].gridPos.col < MAX_MAP_SIZE * MAX_MAP_SIZE);
 
     }
   }
 
   // Initialize the open list
-  //bottom = openList[0];
   back = -1;
-  //PrecomputeNeighbors
 
-  /*
-      If you want to do any map-preprocessing, you'll need to listen
-      for the map change message.  It'll look something like this:
-
-      Callback cb = std::bind(&AStarPather::your_function_name, this);
-      Messenger::listen_for_message(Messages::MAP_CHANGE, cb);
-
-      There are other alternatives to using std::bind, so feel free to mix it up.
-      Callback is just a typedef for std::function<void(void)>, so any std::invoke'able
-      object that std::function can wrap will suffice.
-  */
-
+  // Check if the map is changing
   Callback onMapChangeCB = std::bind(&AStarPather::OnMapChange, this);
   Messenger::listen_for_message(Messages::MAP_CHANGE, onMapChangeCB);
-
   return true; // return false if any errors actually occur, to stop engine initialization
 }
 
 void AStarPather::shutdown()
 {
-    /*
-        Free any dynamically allocated memory or any other general house-
-        keeping you need to do during shutdown.
-    */
+
 }
 
 float AStarPather::CalculateHeuristic(GridNode* node, PathRequest & request)
@@ -76,7 +57,7 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest & request)
   {
     case Heuristic::OCTILE:
     {
-      //min(xDiff, yDiff) * sqrt(2) + max(xDiff, yDiff) – min(xDiff, yDiff)
+      // min(xDiff, yDiff) * sqrt(2) + max(xDiff, yDiff) – min(xDiff, yDiff)
       // min(9, 3) * 1.41 + max(9, 3) – min(9, 3)
       float minimum = std::min(xDiff, yDiff);
       float maximum = std::max(xDiff, yDiff);
@@ -121,51 +102,12 @@ float AStarPather::CalculateHeuristic(GridNode* node, PathRequest & request)
 
 PathResult AStarPather::compute_path(PathRequest &request)
 {
-  /*
-      This is where you handle pathing requests, each request has several fields:
-
-      start/goal - start and goal world positions
-      path - where you will build the path upon completion, path should be
-          start to goal, not goal to start
-      heuristic - which heuristic calculation to use
-      weight - the heuristic weight to be applied
-      newRequest - whether this is the first request for this path, should generally
-          be true, unless single step is on
-
-      smoothing - whether to apply smoothing to the path
-      rubberBanding - whether to apply rubber banding
-      singleStep - whether to perform only a single A* step
-      debugColoring - whether to color the grid based on the A* state:
-          closed list nodes - yellow
-          open list nodes - blue
-
-          use terrain->set_color(row, col, Colors::YourColor);
-          also it can be helpful to temporarily use other colors for specific states
-          when you are testing your algorithms
-
-      method - which algorithm to use: A*, Floyd-Warshall, JPS+, or goal bounding,
-          will be A* generally, unless you implement extra credit features
-
-      The return values are:
-          PROCESSING - a path hasn't been found yet, should only be returned in
-              single step mode until a path is found
-          COMPLETE - a path to the goal was found and has been built in request.path
-          IMPOSSIBLE - a path from start to goal does not exist, do not add start position to path
-  */
-
-  // Should be 
-  int loopCount = 0;
-
-  // WRITE YOUR CODE HERE
-  // First parent is the start always
-  
   // TODO: Change heuristic based on UI button
   float heuristic = 0.0f;
   
   // If we got a new path request
   if (request.newRequest)
   {
-
     ClearNodes(false);
 
     start = terrain->get_grid_position(request.start);
@@ -280,7 +222,7 @@ void AStarPather::SearchNeighbors(GridNode* parentNode, PathRequest & request)
 
 void AStarPather::InitializeChildNode(GridNode* childNode, float childGiven, GridNode* parentNode)
 {
-  float heuristic = childNode->finalCost - childNode->givenCost; // CalculateHeuristic(childNode, request);
+  float heuristic = childNode->finalCost - childNode->givenCost;
   childNode->givenCost = childGiven;
   childNode->finalCost = childGiven + heuristic;
   childNode->parent = parentNode;
